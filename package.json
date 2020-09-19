@@ -1,0 +1,19 @@
+{
+  "name": "rw-ce",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "rollup --config"
+  },
+  "dependencies": {
+    "sam-pattern": "^1.4.8",
+    "uce": "^1.11.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "rollup": "^2.27.1"
+  }
+}
