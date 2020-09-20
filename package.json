@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "rollup --config"
+    "build": "standard && rollup --config"
   },
   "dependencies": {
     "sam-pattern": "^1.4.8",
@@ -14,6 +14,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
-    "rollup": "^2.27.1"
+    "rollup": "^2.27.1",
+    "standard": "^14.3.4"
   }
 }

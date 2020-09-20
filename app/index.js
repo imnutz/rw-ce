@@ -1,4 +1,14 @@
 import { render, html } from 'uce'
-import './ce/ce_signin'
 
-render(document.body, html`<rw-signin formTitle="Dang nhap" .whatup="hey"/>`)
+import './main'
+import $$ from './states'
+
+const renderer = (state) => {
+  console.log(state)
+  render(document.body, html`<realworld-app />`)
+}
+
+$$.stateManager.setRender(renderer)
+
+// start
+$$.intents.startApplication()
