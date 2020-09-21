@@ -1,27 +1,26 @@
 export default {
   appName: 'Conduit',
-  header: {
-    nav: [
-      {
-        name: 'Home',
-        path: '/home'
-      },
-      {
-        name: 'New Post',
-        path: '/editor'
-      },
-      {
-        name: 'Settings',
-        path: '/settings'
-      },
-      {
-        name: 'Sign In',
-        path: '/signin'
-      },
-      {
-        name: 'Sign Up',
-        path: '/signup'
-      }
-    ]
-  }
+  nav: {
+    home: {
+      name: 'Home',
+      path: '/home'
+    },
+    editor: {
+      name: 'New Post',
+      path: '/editor'
+    },
+    settings: {
+      name: 'Settings',
+      path: '/settings'
+    },
+    signin: {
+      name: 'Sign In',
+      path: '/signin'
+    },
+    signup: {
+      name: 'Sign Up',
+      path: '/signup'
+    }
+  },
+  header: []
 }

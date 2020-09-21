@@ -8,6 +8,8 @@
     "build": "standard && rollup --config"
   },
   "dependencies": {
+    "navigo": "^7.1.2",
+    "reactive-props": "^0.1.9",
     "sam-pattern": "^1.4.8",
     "uce": "^1.11.1"
   },
