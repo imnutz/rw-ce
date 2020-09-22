@@ -11,9 +11,7 @@ define(componentName, {
   bound: ['render'],
 
   init () {
-    this.state = reactive(this, {
-      data: this.data
-    }, this.render)
+    this.state = reactive(this, { data: this.data }, this.render)
 
     this.render()
   },

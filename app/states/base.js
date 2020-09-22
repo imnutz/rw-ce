@@ -10,8 +10,10 @@ export default {
       return model
     },
 
-    (model) => ({ page = 'home' }) => {
-      model.page = page
+    (model) => ({ page }) => {
+      if (page) {
+        model.page = page
+      }
 
       return model
     }
