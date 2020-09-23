@@ -4,8 +4,10 @@ import setupRouter from './router'
 import './main'
 import $$ from './states'
 
+const intents = $$.intents
+
 const renderer = (state) => {
-  render(document.body, html`<realworld-app .data=${state}/>`)
+  render(document.body, html`<realworld-app .data=${state} .intents=${intents}/>`)
 }
 
 $$.stateManager.setRender(renderer)
@@ -14,4 +16,4 @@ $$.stateManager.setRender(renderer)
 setupRouter($$.intents)
 
 // start
-$$.intents.startApplication()
+intents.startApplication()

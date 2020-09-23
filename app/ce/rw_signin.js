@@ -1,21 +1,53 @@
-import { define } from 'uce'
+import { define, html } from 'uce'
+import createHandler from 'reactive-props'
+
+const reactive = createHandler({ dom: true })
 
 const componentName = 'rw-signin'
 
 define(componentName, {
-  props: {
-    errors: []
-  },
+  bound: ['render', 'submit', '_getErrorMessage'],
 
   init () {
     this.emailRef = {}
     this.passwordRef = {}
+
+    this.state = reactive(this, {
+      errors: {}
+    }, this.render)
 
     this.render()
   },
 
   submit (evt) {
     evt.preventDefault()
+
+    const email = this.emailRef.current.value
+    const password = this.passwordRef.current.value
+
+    this.dispatchEvent(new CustomEvent('signin', {
+      detail: {
+        email,
+        password
+      }
+    }))
+  },
+
+  _getErrorMessage (error = {}) {
+    const errorMessages = Object.keys(error).reduce((errors, key) => {
+      errors.push([key, error[key]].join(' '))
+      return errors
+    }, [])
+
+    return errorMessages && errorMessages.length ? html`
+      <ul class="error-messages">
+        ${
+          errorMessages.map(msg => {
+            return html`<li>${msg}</li>`
+          })
+        }
+      </ul>
+    ` : ''
   },
 
   render () {
@@ -25,6 +57,11 @@ define(componentName, {
           <div class="row">
             <div class="col-md-6 offset-md-3 col-xs-12">
               <h1 class="text-xs-center">${this.title}</h1>
+              <p class="text-xs-center">
+                <a href="">Have an account?</a>
+              </p>
+
+              ${this._getErrorMessage(this.state.errors)} 
               <form>
                 <fieldset class="form-group">
                   <input class="" type="text" placeholder="Email" ref=${this.emailRef}>

@@ -3,17 +3,24 @@ import {
   setPage
 } from './init'
 
+import {
+  signin
+} from './user'
+
 export default (sam) => {
   const [
     startApplication,
-    goToPage
+    goToPage,
+    iSignin
   ] = sam.getIntents([
     start,
-    setPage
+    setPage,
+    signin
   ]).intents
 
   return {
     startApplication,
-    goToPage
+    goToPage,
+    iSignin
   }
 }

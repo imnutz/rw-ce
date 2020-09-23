@@ -7,6 +7,9 @@
   "scripts": {
     "build": "standard && rollup --config"
   },
+  "standard": {
+    "globals": ["CustomEvent", "fetch", "localStorage"]
+  },
   "dependencies": {
     "navigo": "^7.1.2",
     "reactive-props": "^0.1.9",

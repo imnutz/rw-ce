@@ -8,7 +8,7 @@ const componentName = 'realworld-app'
 const reactive = createHandler({ dom: true })
 
 define(componentName, {
-  bound: ['render'],
+  bound: ['render', 'signinHandler'],
 
   init () {
     this.state = reactive(this, { data: this.data }, this.render)
@@ -16,11 +16,17 @@ define(componentName, {
     this.render()
   },
 
+  signinHandler (evt) {
+    const { detail: { email, password } } = evt
+
+    this.intents.iSignin(email, password)
+  },
+
   _getPage () {
     const page = this.state.data.page
     if (page === 'signin') {
       return html`
-        <rw-signin />
+        <rw-signin onsignin=${this.signinHandler} .errors=${this.state.data.authErrors}/>
       `
     }
 
