@@ -1,18 +1,17 @@
 import { define, html } from 'uce'
-import createHandler from 'reactive-props'
 
 import './ce'
 
 const componentName = 'realworld-app'
 
-const reactive = createHandler({ dom: true })
-
 define(componentName, {
   bound: ['render', 'signinHandler'],
 
-  init () {
-    this.state = reactive(this, { data: this.data }, this.render)
+  props: {
+    state: {}
+  },
 
+  init () {
     this.render()
   },
 
@@ -23,24 +22,23 @@ define(componentName, {
   },
 
   _getPage () {
-    const page = this.state.data.page
+    const page = this.state.page
     if (page === 'signin') {
       return html`
-        <rw-signin onsignin=${this.signinHandler} .errors=${this.state.data.authErrors}/>
+        <rw-signin onsignin=${this.signinHandler} .errors=${this.state.authErrors}/>
       `
     }
 
     return html`
-      <rw-home />
+      <rw-home .navItems=${this.state.header}/>
     `
   },
   render () {
     const {
-      data: {
-        appName,
-        header
-      }
+      appName,
+      header
     } = this.state
+
     return this.html`
       <rw-header .appName=${appName} .navItems=${header}/>
       ${this._getPage()}

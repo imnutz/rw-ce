@@ -1,21 +1,39 @@
 export default {
   acceptors: [
-    (model) => _ => {
-      model.header = [
-        model.nav.home,
-        model.nav.signin,
-        model.nav.signup
-      ]
+    model => ({ user }) => {
+      if (!model.user) {
+        model.user = user
+      }
 
       return model
     },
-
-    (model) => ({ page }) => {
+    model => ({ page }) => {
       if (page) {
         model.page = page
       }
 
       return model
+    },
+    model => ({ redirected = false }) => {
+      model.redirectPage = null
+
+      return model
+    }
+  ],
+  reactors: [
+    model => _ => {
+      if (model.user) {
+        const {
+          nav: { home, editor, settings }
+        } = model
+        model.header = [home, editor, settings]
+      } else {
+        const {
+          nav: { home, signin, signup }
+        } = model
+
+        model.header = [home, signin, signup]
+      }
     }
   ]
 }

@@ -1,20 +1,18 @@
 import { define, html } from 'uce'
-import createHandler from 'reactive-props'
-
-const reactive = createHandler({ dom: true })
 
 const componentName = 'rw-signin'
 
 define(componentName, {
   bound: ['render', 'submit', '_getErrorMessage'],
 
+  props: {
+    errors: {},
+    title: 'Sign In'
+  },
+
   init () {
     this.emailRef = {}
     this.passwordRef = {}
-
-    this.state = reactive(this, {
-      errors: {}
-    }, this.render)
 
     this.render()
   },
@@ -61,7 +59,7 @@ define(componentName, {
                 <a href="">Have an account?</a>
               </p>
 
-              ${this._getErrorMessage(this.state.errors)} 
+              ${this._getErrorMessage(this.errors)} 
               <form>
                 <fieldset class="form-group">
                   <input class="" type="text" placeholder="Email" ref=${this.emailRef}>

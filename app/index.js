@@ -1,19 +1,23 @@
 import { render, html } from 'uce'
 
-import setupRouter from './router'
 import './main'
+
+import setupRouter from './router'
+import setupNAPs from './naps'
 import $$ from './states'
 
 const intents = $$.intents
 
 const renderer = (state) => {
-  render(document.body, html`<realworld-app .data=${state} .intents=${intents}/>`)
+  render(document.body, html`<realworld-app .state=${state} .intents=${intents}/>`)
 }
 
 $$.stateManager.setRender(renderer)
 
 // setup router
-setupRouter($$.intents)
+const router = setupRouter($$.intents)
+
+setupNAPs($$.stateManager, router, intents)
 
 // start
 intents.startApplication()

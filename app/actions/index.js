@@ -1,5 +1,6 @@
 import {
   start,
+  redirected,
   setPage
 } from './init'
 
@@ -11,16 +12,19 @@ export default (sam) => {
   const [
     startApplication,
     goToPage,
-    iSignin
+    iSignin,
+    iRedirected
   ] = sam.getIntents([
     start,
     setPage,
-    signin
+    signin,
+    redirected
   ]).intents
 
   return {
     startApplication,
     goToPage,
-    iSignin
+    iSignin,
+    iRedirected
   }
 }

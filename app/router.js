@@ -14,4 +14,6 @@ export default (intents) => {
       intents.goToPage('home')
     })
     .resolve()
+
+  return navigo
 }

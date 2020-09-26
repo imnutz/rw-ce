@@ -3,6 +3,11 @@ import { define, html } from 'uce'
 const componentName = 'rw-header'
 
 define(componentName, {
+  bound: ['render'],
+  props: {
+    navItems: []
+  },
+
   _getNavItem (data) {
     return html`
       <li class="nav-item">

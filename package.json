@@ -8,13 +8,17 @@
     "build": "standard && rollup --config"
   },
   "standard": {
-    "globals": ["CustomEvent", "fetch", "localStorage"]
+    "globals": [
+      "CustomEvent",
+      "fetch",
+      "localStorage"
+    ]
   },
   "dependencies": {
     "navigo": "^7.1.2",
     "reactive-props": "^0.1.9",
     "sam-pattern": "^1.4.8",
-    "uce": "^1.11.1"
+    "uce": "^1.11.2"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.0.0",

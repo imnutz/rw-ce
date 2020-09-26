@@ -1317,6 +1317,11 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+reactive-props@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/reactive-props/-/reactive-props-0.1.10.tgz#e506ec7c08b018baca0bc2860d6b5d1b76ab80d5"
+  integrity sha512-+LeHr+eIjGKS+ax66wlEs9ynruATFzY7QjVwciffu56fGNgrrXX+MPT+dHAEp/0enkwbKz9ErH0Lam1822Tovw==
+
 reactive-props@^0.1.9:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/reactive-props/-/reactive-props-0.1.9.tgz#19bfc013380b5f4f375f0bfcfe3db1de4d426f1f"
@@ -1638,13 +1643,14 @@ uarray@^1.0.0:
   resolved "https://registry.yarnpkg.com/uarray/-/uarray-1.0.0.tgz#e89bf0ea2129596f4bf653b66e53246ed6562b6c"
   integrity sha512-LHmiAd5QuAv7pU2vbh+Zq9YOnqVK0H764p2Ozinpfy9ka58OID4IsGLiXsitqH7n0NAIDxvax1A/kDXpii/Ckg==
 
-uce@^1.11.1:
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/uce/-/uce-1.11.1.tgz#8f761d9b2c9b1fd18d8e625b1dbc54cb88d9495d"
-  integrity sha512-EdG4e1OPOrLiBmvJj2zN8YnAwuTbKhx//T7VrULwShdQIbv4N1l+bR7ixtGK3gQnZtdMK4lJJ+7QyICioLC+jQ==
+uce@^1.11.2:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/uce/-/uce-1.11.2.tgz#50910277dc29e7b4ffbb9d567136aa54679731a2"
+  integrity sha512-d+w45h9U/f07aQQhtvUX9ntJ4eYn0v9XyKMjwnzz0i9lVLWC6En0xPHJvdttM2eSJ1s0DJqHrQsDmXZMqz3uSQ==
   dependencies:
     plain-tag "^0.1.3"
-    uhtml "^2.1.1"
+    reactive-props "^0.1.10"
+    uhtml "^2.1.2"
     umap "^1.0.2"
 
 udomdiff@^1.1.0:
@@ -1659,10 +1665,10 @@ uhandlers@^0.3.6:
   dependencies:
     uarray "^1.0.0"
 
-uhtml@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/uhtml/-/uhtml-2.1.1.tgz#316bc12f182ab299344554f7389c5d5f18f89378"
-  integrity sha512-2lR3NXVMJ7se0+Uznv3GJLw9w5sCIfQs3Kc0x90EXc6S7MsDCikVkw8wzi0OXawfZ5KziUYemfj+kSwackZrjw==
+uhtml@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/uhtml/-/uhtml-2.1.2.tgz#7170789dc0b6c1fced4aee826b8174bd254aea29"
+  integrity sha512-2kBz7ank/FnDDk1l1+0/Behj5ptTgi2/GdLg+/8jyofi5ipIwWBh5CJg0vbRZF90LVvZ+EfSmLRBJAyNs3mcEA==
   dependencies:
     "@ungap/create-content" "^0.2.0"
     uarray "^1.0.0"
