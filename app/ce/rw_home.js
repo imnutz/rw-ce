@@ -1,8 +1,29 @@
-import { define } from 'uce'
+import { define, html } from 'uce'
 
 const componentName = 'rw-home'
 
 define(componentName, {
+  bound: ['render'],
+  props: {
+    tabs: []
+  },
+
+  _getTabs (tabs = []) {
+    return html`
+      <ul class="nav nav-pills outline-active">
+        ${
+          tabs.map(t => {
+            return html`
+              <li class="nav-item">
+                <a class="nav-link" href="">${t.name}</a>
+              </li>
+            `
+          })
+        }
+      </ul>
+    `
+  },
+
   render () {
     return this.html`
       <div class="home-page">
@@ -19,14 +40,7 @@ define(componentName, {
 
             <div class="col-md-9">
               <div class="feed-toggle">
-                <ul class="nav nav-pills outline-active">
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="">Your Feed</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="">Global Feed</a>
-                  </li>
-                </ul>
+                ${this._getTabs(this.tabs)}
               </div>
 
               <div class="article-preview">

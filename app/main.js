@@ -5,7 +5,7 @@ import './ce'
 const componentName = 'realworld-app'
 
 define(componentName, {
-  bound: ['render', 'signinHandler'],
+  bound: ['render', 'signinHandler', '_getPage'],
 
   props: {
     state: {}
@@ -29,8 +29,10 @@ define(componentName, {
       `
     }
 
+    const homeState = this.state.home
+    const tabs = homeState ? homeState.tabs : []
     return html`
-      <rw-home .navItems=${this.state.header}/>
+      <rw-home .navItems=${this.state.header} .tabs=${tabs}/>
     `
   },
   render () {

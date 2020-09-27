@@ -21,3 +21,4 @@ setupNAPs($$.stateManager, router, intents)
 
 // start
 intents.startApplication()
+router.resolve()

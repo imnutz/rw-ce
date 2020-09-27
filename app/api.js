@@ -1,5 +1,9 @@
 const API_BASE = 'https://conduit.productionready.io/api'
 
+const header = {
+  'Content-Type': 'application/json;charset=utf-8'
+}
+
 const getEndpoint = (path) => {
   return [API_BASE, path].join('')
 }
@@ -12,9 +16,7 @@ export const auth = (email, password) => {
 
   return fetch(endpoint, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
+    headers: { ...header },
     body: JSON.stringify(data)
   }).then(response => response.json())
     .then(data => {
@@ -23,4 +25,12 @@ export const auth = (email, password) => {
         authInfo: data
       }
     })
+}
+
+export const getArticles = (offset = 0, limit = 10) => {
+  const endpoint = getEndpoint(`/articles?limit=${limit}&offset=${offset}`)
+
+  return fetch(endpoint, {
+    headers: { ...header }
+  }).then(response => response.json())
 }

@@ -5,6 +5,7 @@ import setupActions from '../actions'
 
 import base from './base'
 import user from './user'
+import home from './home'
 
 const { api, createInstance } = sam
 
@@ -14,6 +15,7 @@ const samInstance = api(createInstance())
 samInstance.addInitialState(initialState)
 
 samInstance.addComponent(base)
+samInstance.addComponent(home)
 samInstance.addComponent(user)
 
 // setup actions, get back the intents

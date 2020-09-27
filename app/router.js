@@ -13,7 +13,6 @@ export default (intents) => {
     .on('/home', () => {
       intents.goToPage('home')
     })
-    .resolve()
 
   return navigo
 }

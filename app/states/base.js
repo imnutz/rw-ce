@@ -15,7 +15,9 @@ export default {
       return model
     },
     model => ({ redirected = false }) => {
-      model.redirectPage = null
+      if (redirected) {
+        model.redirectPage = null
+      }
 
       return model
     }
@@ -27,13 +29,23 @@ export default {
           nav: { home, editor, settings }
         } = model
         model.header = [home, editor, settings]
+
+        const {
+          personalFeed, globalFeed
+        } = model.home.tabInfos
+        model.home.tabs = [personalFeed, globalFeed]
       } else {
         const {
           nav: { home, signin, signup }
         } = model
 
         model.header = [home, signin, signup]
+
+        const { globalFeed } = model.home.tabInfos
+        model.home.tabs = [globalFeed]
       }
+
+      return model
     }
   ]
 }

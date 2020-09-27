@@ -22,5 +22,16 @@ export default {
       path: '/signup'
     }
   },
-  header: []
+  header: [],
+  home: {
+    tabs: [],
+    tabInfos: {
+      globalFeed: {
+        name: 'Global Feed'
+      },
+      personalFeed: {
+        name: 'Your Feed'
+      }
+    }
+  }
 }
