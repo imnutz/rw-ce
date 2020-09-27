@@ -1,3 +1,4 @@
+import { GLOBAL_FEED_ID, PERSONAL_FEED_ID } from '../constants'
 export default {
   appName: 'Conduit',
   nav: {
@@ -25,12 +26,16 @@ export default {
   header: [],
   home: {
     tabs: [],
+    tags: [],
+    currentTab: 'globalfeed',
     tabInfos: {
       globalFeed: {
-        name: 'Global Feed'
+        name: 'Global Feed',
+        id: GLOBAL_FEED_ID
       },
       personalFeed: {
-        name: 'Your Feed'
+        name: 'Your Feed',
+        id: PERSONAL_FEED_ID
       }
     }
   }

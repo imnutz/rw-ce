@@ -21,6 +21,11 @@ define(componentName, {
     this.intents.iSignin(email, password)
   },
 
+  ontogglefeed (evt) {
+    console.log(evt.detail)
+    this.intents.iToggleFeed(evt.detail.tabId)
+  },
+
   _getPage () {
     const page = this.state.page
     if (page === 'signin') {
@@ -31,10 +36,19 @@ define(componentName, {
 
     const homeState = this.state.home
     const tabs = homeState ? homeState.tabs : []
+    const articles = homeState ? homeState.articles : []
+    const currentTab = homeState ? homeState.currentTab : ''
+
     return html`
-      <rw-home .navItems=${this.state.header} .tabs=${tabs}/>
+      <rw-home 
+        .navItems=${this.state.header} 
+        .tabs=${tabs}
+        .articles=${articles}
+        .currentTab=${currentTab}
+      />
     `
   },
+
   render () {
     const {
       appName,

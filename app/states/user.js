@@ -1,6 +1,9 @@
 import storage from '../storage'
+
 import {
-  STORAGE_USER_KEY
+  STORAGE_USER_KEY,
+  pages,
+  PERSONAL_FEED_ID
 } from '../constants'
 
 export default {
@@ -15,8 +18,9 @@ export default {
         } else if (user) {
           model.user = user
           model.authErrors = {}
-          model.redirectPage = '/home'
+          model.redirectPage = pages.HOME
 
+          model.home.currentTab = PERSONAL_FEED_ID
           storage.setItem(STORAGE_USER_KEY, user)
         }
       }

@@ -3,9 +3,22 @@ import { define, html } from 'uce'
 const componentName = 'rw-home'
 
 define(componentName, {
-  bound: ['render'],
+  bound: ['render', '_feedToggleHandler'],
   props: {
-    tabs: []
+    tabs: [],
+    articles: [],
+    currentTab: ''
+  },
+
+  _feedToggleHandler (evt) {
+    evt.preventDefault()
+
+    const target = evt.target
+
+    this.dispatchEvent(new CustomEvent('togglefeed', {
+      bubbles: true,
+      detail: { tabId: target.getAttribute('data-tid') }
+    }))
   },
 
   _getTabs (tabs = []) {
@@ -13,15 +26,27 @@ define(componentName, {
       <ul class="nav nav-pills outline-active">
         ${
           tabs.map(t => {
+            const clazz = ['nav-link']
+            if (t.id === this.currentTab) {
+              clazz.push('active')
+            }
             return html`
               <li class="nav-item">
-                <a class="nav-link" href="">${t.name}</a>
+                <a class="${clazz.join(' ')}" href="#" data-tid="${t.id}">${t.name}</a>
               </li>
             `
           })
         }
       </ul>
     `
+  },
+
+  _getArticles (articles = []) {
+    return articles.map(article => {
+      return html`
+        <rw-article-summary .article=${article} />
+      `
+    })
   },
 
   render () {
@@ -39,62 +64,16 @@ define(componentName, {
           <div class="row">
 
             <div class="col-md-9">
-              <div class="feed-toggle">
+              <div class="feed-toggle" onclick=${this._feedToggleHandler}>
                 ${this._getTabs(this.tabs)}
               </div>
 
-              <div class="article-preview">
-                <div class="article-meta">
-                  <a href="profile.html"><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
-                  <div class="info">
-                    <a href="" class="author">Eric Simons</a>
-                    <span class="date">January 20th</span>
-                  </div>
-                  <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                    <i class="ion-heart"></i> 29
-                  </button>
-                </div>
-                <a href="" class="preview-link">
-                  <h1>How to build webapps that scale</h1>
-                  <p>This is the description for the post.</p>
-                  <span>Read more...</span>
-                </a>
-              </div>
-
-              <div class="article-preview">
-                <div class="article-meta">
-                  <a href="profile.html"><img src="http://i.imgur.com/N4VcUeJ.jpg" /></a>
-                  <div class="info">
-                    <a href="" class="author">Albert Pai</a>
-                    <span class="date">January 20th</span>
-                  </div>
-                  <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                    <i class="ion-heart"></i> 32
-                  </button>
-                </div>
-                <a href="" class="preview-link">
-                  <h1>The song you won't ever stop singing. No matter how hard you try.</h1>
-                  <p>This is the description for the post.</p>
-                  <span>Read more...</span>
-                </a>
-              </div>
-
+              ${this._getArticles(this.articles)}
             </div>
 
             <div class="col-md-3">
               <div class="sidebar">
-                <p>Popular Tags</p>
-
-                <div class="tag-list">
-                  <a href="" class="tag-pill tag-default">programming</a>
-                  <a href="" class="tag-pill tag-default">javascript</a>
-                  <a href="" class="tag-pill tag-default">emberjs</a>
-                  <a href="" class="tag-pill tag-default">angularjs</a>
-                  <a href="" class="tag-pill tag-default">react</a>
-                  <a href="" class="tag-pill tag-default">mean</a>
-                  <a href="" class="tag-pill tag-default">node</a>
-                  <a href="" class="tag-pill tag-default">rails</a>
-                </div>
+                <rw-tags .tags=${['a', 'b', 'c', 'd']} .title=${'Tags Tags Tags'}/>
               </div>
             </div>
 

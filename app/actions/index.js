@@ -9,8 +9,11 @@ import {
 } from './user'
 
 import {
-  fetchArticles
+  fetchArticles,
+  fetchFeeds
 } from './article'
+
+import { toggleFeed } from './home'
 
 export default (sam) => {
   const [
@@ -21,14 +24,21 @@ export default (sam) => {
   ] = sam.getIntents([start, setPage, signin, redirected]).intents
 
   const [
-    iFetchArticles
-  ] = sam.getIntents([fetchArticles]).intents
+    iFetchArticles,
+    iFetchFeeds
+  ] = sam.getIntents([fetchArticles, fetchFeeds]).intents
+
+  const [
+    iToggleFeed
+  ] = sam.getIntents([toggleFeed]).intents
 
   return {
     startApplication,
     goToPage,
     iSignin,
     iRedirected,
-    iFetchArticles
+    iFetchArticles,
+    iFetchFeeds,
+    iToggleFeed
   }
 }

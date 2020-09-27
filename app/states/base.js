@@ -1,8 +1,11 @@
+import { pages, PERSONAL_FEED_ID } from '../constants'
+
 export default {
   acceptors: [
     model => ({ user }) => {
       if (!model.user) {
         model.user = user
+        model.home.currentTab = PERSONAL_FEED_ID
       }
 
       return model
@@ -10,6 +13,10 @@ export default {
     model => ({ page }) => {
       if (page) {
         model.page = page
+
+        if (model.page === pages.HOME) {
+          model.home.articles = []
+        }
       }
 
       return model

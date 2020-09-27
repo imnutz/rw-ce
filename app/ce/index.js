@@ -1,4 +1,7 @@
 import './rw_signin'
+import './rw_tags'
+import './rw_article_summary'
+import './rw_paginator'
 import './rw_home'
 import './rw_header'
 import './rw_footer'
