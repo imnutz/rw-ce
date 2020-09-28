@@ -38,5 +38,6 @@ export default {
         id: PERSONAL_FEED_ID
       }
     }
-  }
+  },
+  isAuthenticated: false
 }

@@ -7,7 +7,8 @@ define(componentName, {
   props: {
     tabs: [],
     articles: [],
-    currentTab: ''
+    currentTab: null,
+    isFetching: false
   },
 
   _feedToggleHandler (evt) {
@@ -49,6 +50,14 @@ define(componentName, {
     })
   },
 
+  _getLoading () {
+    return html`
+      <div class="loading">
+        Loading articles...
+      </div>
+    `
+  },
+
   render () {
     return this.html`
       <div class="home-page">
@@ -68,7 +77,7 @@ define(componentName, {
                 ${this._getTabs(this.tabs)}
               </div>
 
-              ${this._getArticles(this.articles)}
+              ${this.isFetching ? this._getLoading() : this._getArticles(this.articles)}
             </div>
 
             <div class="col-md-3">

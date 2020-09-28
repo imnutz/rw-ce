@@ -2,31 +2,14 @@ import { define } from 'uce'
 
 const componentName = 'rw-article-summary'
 
-/*
-{title: "My second post", slug: "my-second-post-o214pl", body: "Today is very cloudy but I am happy to code.", createdAt: "2020-09-26T23:47:00.744Z", updatedAt: "2020-09-26T23:47:00.744Z", …}
-author:
-bio: "I love exploring new technology ya"
-following: false
-image: "https://avatars2.githubusercontent.com/u/19742621?s=460&v=4"
-username: "alle.aldine"
-__proto__: Object
-body: "Today is very cloudy but I am happy to code."
-createdAt: "2020-09-26T23:47:00.744Z"
-description: "I think this is great"
-favorited: false
-favoritesCount: 0
-slug: "my-second-post-o214pl"
-tagList: []
-title: "My second post"
-updatedAt: "2020-09-26T23:47:00.744Z"
-*/
-
 define(componentName, {
   bound: ['render'],
   props: {
-    article: {}
+    article: null
   },
   render () {
+    if (!this.article) return this.html``
+
     return this.html`
       <div class="article-preview">
         <div class="article-meta">

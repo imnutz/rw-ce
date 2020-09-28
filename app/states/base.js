@@ -2,9 +2,17 @@ import { pages, PERSONAL_FEED_ID } from '../constants'
 
 export default {
   acceptors: [
+    model => _ => {
+      if (model.hasError()) {
+        console.error(model.error())
+      }
+
+      return model
+    },
     model => ({ user }) => {
-      if (!model.user) {
+      if (user && !model.user) {
         model.user = user
+        model.isAuthenticated = true
         model.home.currentTab = PERSONAL_FEED_ID
       }
 
@@ -31,7 +39,7 @@ export default {
   ],
   reactors: [
     model => _ => {
-      if (model.user) {
+      if (model.isAuthenticated) {
         const {
           nav: { home, editor, settings }
         } = model

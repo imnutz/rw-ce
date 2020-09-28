@@ -48,3 +48,12 @@ export const getFeeds = (token, offset = 0, limit = 10) => {
     headers: { ...header, ...getAuthHeader(token) }
   }).then(response => response.json())
 }
+
+export const getTags = () => {
+  const endpoint = getEndpoint(`/tags`)
+
+  return fetch(endpoint, {
+    headers: { ...header }
+  }).then(response => response.json())
+
+}

@@ -45,6 +45,7 @@ define(componentName, {
         .tabs=${tabs}
         .articles=${articles}
         .currentTab=${currentTab}
+        .isFetching=${this.state.fetching}
       />
     `
   },

@@ -16,10 +16,8 @@ export default (sam, router, intents) => {
       const isHomeAndFetching = model.page === pages.HOME && model.fetching
       if (isHomeAndFetching && model.home.currentTab === GLOBAL_FEED_ID) {
         intents.iFetchArticles(0)
-        return true
       } else if (isHomeAndFetching && model.home.currentTab === PERSONAL_FEED_ID) {
         intents.iFetchFeeds(model.user.token, 0)
-        return true
       }
 
       return false

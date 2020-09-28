@@ -19,6 +19,7 @@ export default {
           model.user = user
           model.authErrors = {}
           model.redirectPage = pages.HOME
+          model.isAuthenticated = true
 
           model.home.currentTab = PERSONAL_FEED_ID
           storage.setItem(STORAGE_USER_KEY, user)
