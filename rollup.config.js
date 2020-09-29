@@ -8,7 +8,8 @@ export default {
   output: {
     file: path.resolve(__dirname, './dist/bundled.js'),
     format: 'es',
-    name: 'Realworld'
+    name: 'Realworld',
+    sourcemap: true
   },
   plugins: [
     commonjs(),

@@ -33,8 +33,17 @@ export const auth = (email, password) => {
     })
 }
 
-export const getArticles = (offset = 0, limit = 10) => {
-  const endpoint = getEndpoint(`/articles?limit=${limit}&offset=${offset}`)
+export const getArticles = (offset = 0, limit = 10, tag = '') => {
+  var params = [
+    `offset=${offset}`,
+    `limit=${limit}`
+  ]
+
+  if (tag) {
+    params.push(`tag=${tag}`)
+  }
+
+  const endpoint = getEndpoint(`/articles?${params.join('&')}`)
 
   return fetch(endpoint, {
     headers: { ...header }
@@ -50,10 +59,9 @@ export const getFeeds = (token, offset = 0, limit = 10) => {
 }
 
 export const getTags = () => {
-  const endpoint = getEndpoint(`/tags`)
+  const endpoint = getEndpoint('/tags')
 
   return fetch(endpoint, {
     headers: { ...header }
   }).then(response => response.json())
-
 }

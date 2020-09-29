@@ -1,4 +1,4 @@
-import { GLOBAL_FEED_ID, PERSONAL_FEED_ID } from '../constants'
+import { pages, GLOBAL_FEED_ID, PERSONAL_FEED_ID } from '../constants'
 export default {
   appName: 'Conduit',
   nav: {
@@ -26,7 +26,8 @@ export default {
   header: [],
   home: {
     tabs: [],
-    tags: [],
+    tags: undefined,
+    articles: undefined,
     currentTab: 'globalfeed',
     tabInfos: {
       globalFeed: {
@@ -39,5 +40,21 @@ export default {
       }
     }
   },
-  isAuthenticated: false
+  isAuthenticated: false,
+
+  isHome () {
+    return this.page === pages.HOME
+  },
+
+  isTagTab () {
+    return this.home.currentTab !== GLOBAL_FEED_ID && this.home.currentTab !== PERSONAL_FEED_ID
+  },
+
+  isGlobalTab () {
+    return this.home.currentTab === GLOBAL_FEED_ID
+  },
+
+  isPersonalTab () {
+    return this.home.currentTab === PERSONAL_FEED_ID
+  }
 }

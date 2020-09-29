@@ -1,7 +1,6 @@
 import sam from 'sam-pattern'
 
 import initialState from './initial_state'
-import setupActions from '../actions'
 
 import base from './base'
 import user from './user'
@@ -14,12 +13,36 @@ const samInstance = api(createInstance())
 // initiate state
 samInstance.addInitialState(initialState)
 
-samInstance.addComponent(base)
-samInstance.addComponent(home)
-samInstance.addComponent(user)
+// setup components
+const [
+  start,
+  redirected,
+  setPage
+] = samInstance.addComponent(base).intents
 
-// setup actions, get back the intents
-const intents = setupActions(samInstance)
+const [
+  toggleFeed,
+  selectTag,
+  fetchArticles,
+  fetchFeeds,
+  fetchTags
+] = samInstance.addComponent(home).intents
+
+const [
+  signin
+] = samInstance.addComponent(user).intents
+
+const intents = {
+  start,
+  redirected,
+  setPage,
+  toggleFeed,
+  selectTag,
+  fetchArticles,
+  fetchFeeds,
+  fetchTags,
+  signin
+}
 
 export default {
   stateManager: samInstance,

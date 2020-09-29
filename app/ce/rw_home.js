@@ -7,6 +7,7 @@ define(componentName, {
   props: {
     tabs: [],
     articles: [],
+    tags: [],
     currentTab: null,
     isFetching: false
   },
@@ -82,7 +83,7 @@ define(componentName, {
 
             <div class="col-md-3">
               <div class="sidebar">
-                <rw-tags .tags=${['a', 'b', 'c', 'd']} .title=${'Tags Tags Tags'}/>
+                <rw-tags .tags=${this.tags} .title=${'Tags Tags Tags'}/>
               </div>
             </div>
 

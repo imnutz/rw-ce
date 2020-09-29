@@ -1,4 +1,9 @@
 import { pages, PERSONAL_FEED_ID } from '../constants'
+import {
+  start,
+  redirected,
+  setPage
+} from '../actions/init'
 
 export default {
   acceptors: [
@@ -9,13 +14,33 @@ export default {
 
       return model
     },
-    model => ({ user }) => {
-      if (user && !model.user) {
-        model.user = user
-        model.isAuthenticated = true
-        model.home.currentTab = PERSONAL_FEED_ID
-      }
+    model => ({ starting, user }) => {
+      if (starting) {
+        if (user && !model.user) {
+          model.user = user
+          model.isAuthenticated = true
+          model.home.currentTab = PERSONAL_FEED_ID
 
+          const {
+            nav: { home, editor, settings }
+          } = model
+          model.header = [home, editor, settings]
+
+          const {
+            personalFeed, globalFeed
+          } = model.home.tabInfos
+          model.home.tabs = [personalFeed, globalFeed]
+        } else {
+          const {
+            nav: { home, signin, signup }
+          } = model
+
+          model.header = [home, signin, signup]
+
+          const { globalFeed } = model.home.tabInfos
+          model.home.tabs = [globalFeed]
+        }
+      }
       return model
     },
     model => ({ page }) => {
@@ -23,7 +48,7 @@ export default {
         model.page = page
 
         if (model.page === pages.HOME) {
-          model.home.articles = []
+          model.home.articles = undefined
         }
       }
 
@@ -37,30 +62,9 @@ export default {
       return model
     }
   ],
-  reactors: [
-    model => _ => {
-      if (model.isAuthenticated) {
-        const {
-          nav: { home, editor, settings }
-        } = model
-        model.header = [home, editor, settings]
-
-        const {
-          personalFeed, globalFeed
-        } = model.home.tabInfos
-        model.home.tabs = [personalFeed, globalFeed]
-      } else {
-        const {
-          nav: { home, signin, signup }
-        } = model
-
-        model.header = [home, signin, signup]
-
-        const { globalFeed } = model.home.tabInfos
-        model.home.tabs = [globalFeed]
-      }
-
-      return model
-    }
+  actions: [
+    start,
+    redirected,
+    setPage
   ]
 }

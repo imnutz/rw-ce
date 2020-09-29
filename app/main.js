@@ -18,12 +18,15 @@ define(componentName, {
   signinHandler (evt) {
     const { detail: { email, password } } = evt
 
-    this.intents.iSignin(email, password)
+    this.intents.signin(email, password)
   },
 
   ontogglefeed (evt) {
-    console.log(evt.detail)
-    this.intents.iToggleFeed(evt.detail.tabId)
+    this.intents.toggleFeed(evt.detail.tabId)
+  },
+
+  ontagselection (evt) {
+    this.intents.selectTag(evt.detail.tag)
   },
 
   _getPage () {
@@ -36,7 +39,8 @@ define(componentName, {
 
     const homeState = this.state.home
     const tabs = homeState ? homeState.tabs : []
-    const articles = homeState ? homeState.articles : []
+    const articles = homeState ? homeState.articles : undefined
+    const tags = homeState ? homeState.tags : []
     const currentTab = homeState ? homeState.currentTab : ''
 
     return html`
@@ -44,8 +48,9 @@ define(componentName, {
         .navItems=${this.state.header} 
         .tabs=${tabs}
         .articles=${articles}
+        .tags=${tags}
         .currentTab=${currentTab}
-        .isFetching=${this.state.fetching}
+        .isFetching=${this.state.fetchingArticles}
       />
     `
   },

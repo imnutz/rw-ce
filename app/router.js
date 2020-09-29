@@ -5,13 +5,15 @@ export default (intents) => {
 
   navigo
     .on('/', () => {
-      intents.goToPage('home')
+      intents.setPage('home')
+      intents.start()
     })
     .on('/signin', () => {
-      intents.goToPage('signin')
+      intents.setPage('signin')
     })
     .on('/home', () => {
-      intents.goToPage('home')
+      intents.setPage('home')
+      intents.start()
     })
 
   return navigo

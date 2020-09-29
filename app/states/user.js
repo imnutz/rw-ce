@@ -1,4 +1,7 @@
 import storage from '../storage'
+import {
+  signin
+} from '../actions/user'
 
 import {
   STORAGE_USER_KEY,
@@ -28,5 +31,9 @@ export default {
 
       return model
     }
+  ],
+
+  actions: [
+    signin
   ]
 }

@@ -3,17 +3,24 @@ import { define, html } from 'uce'
 const componentName = 'rw-tags'
 
 define(componentName, {
-  bound: ['render', '_getTags'],
+  bound: ['render', '_getTags', '_tagSelectionHandler'],
   props: {
-    tags: [],
+    tags: undefined,
     title: 'Popular Tags'
+  },
+
+  _tagSelectionHandler (evt) {
+    evt.preventDefault()
+    const target = evt.target
+
+    this.dispatchEvent(new CustomEvent('tagselection', { bubbles: true, detail: { tag: target.text } }))
   },
 
   _getTags () {
     return html`
-      <div class="tag-list">
+      <div class="tag-list" onclick=${this._tagSelectionHandler}>
         ${
-          this.tags.map(t => {
+          this.tags && this.tags.map(t => {
             return html`
               <a href="" class="tag-pill tag-default">${t}</a>
             `

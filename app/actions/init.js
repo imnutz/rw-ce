@@ -5,6 +5,7 @@ import {
 
 export const start = () => {
   return {
+    starting: true,
     user: storage.getItem(STORAGE_USER_KEY)
   }
 }
