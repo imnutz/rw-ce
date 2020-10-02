@@ -65,3 +65,22 @@ export const getTags = () => {
     headers: { ...header }
   }).then(response => response.json())
 }
+
+export const register = (username, email, password) => {
+  const endpoint = getEndpoint('/users')
+  const data = {
+    user: { username, email, password }
+  }
+
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: { ...header },
+    body: JSON.stringify(data)
+  }).then(response => response.json())
+    .then(data => {
+      return {
+        registered: true,
+        userInfo: data
+      }
+    })
+}

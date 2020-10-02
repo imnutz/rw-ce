@@ -29,7 +29,8 @@ const [
 ] = samInstance.addComponent(home).intents
 
 const [
-  signin
+  signin,
+  signup
 ] = samInstance.addComponent(user).intents
 
 const intents = {
@@ -41,7 +42,8 @@ const intents = {
   fetchArticles,
   fetchFeeds,
   fetchTags,
-  signin
+  signin,
+  signup
 }
 
 export default {

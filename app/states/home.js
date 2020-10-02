@@ -12,6 +12,7 @@ export default {
       if (model.page === pages.HOME && articles && model.fetchingArticles) {
         model.fetchingArticles = false
         model.home.articles = articles.articles
+        model.home.articlesCount = articles.articlesCount
       }
 
       return model
@@ -25,6 +26,7 @@ export default {
     model => ({ tabId }) => {
       if (model.page === pages.HOME && tabId) {
         if (model.home.currentTab !== tabId) {
+          model.excludeTagTab()
           model.home.currentTab = tabId
           model.home.articles = undefined
         }
@@ -34,6 +36,7 @@ export default {
     },
     model => ({ tagName }) => {
       if (tagName) {
+        model.excludeTagTab()
         model.home.tabs.push({
           name: `#${tagName}`,
           id: tagName
@@ -57,6 +60,7 @@ export default {
       }
     }
   ],
+
   actions: [
     toggleFeed,
     selectTag,
@@ -64,6 +68,7 @@ export default {
     fetchFeeds,
     fetchTags
   ],
+
   options: {
     ignoreOutdatedProposals: true
   }

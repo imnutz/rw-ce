@@ -7,6 +7,8 @@ define(componentName, {
   props: {
     tabs: [],
     articles: [],
+    articlesCount: 1,
+    currentPage: 1,
     tags: [],
     currentTab: null,
     isFetching: false
@@ -62,7 +64,6 @@ define(componentName, {
   render () {
     return this.html`
       <div class="home-page">
-
         <div class="banner">
           <div class="container">
             <h1 class="logo-font">conduit</h1>
@@ -72,7 +73,6 @@ define(componentName, {
 
         <div class="container page">
           <div class="row">
-
             <div class="col-md-9">
               <div class="feed-toggle" onclick=${this._feedToggleHandler}>
                 ${this._getTabs(this.tabs)}
@@ -86,7 +86,12 @@ define(componentName, {
                 <rw-tags .tags=${this.tags} .title=${'Tags Tags Tags'}/>
               </div>
             </div>
+          </div>
 
+          <div class="row">
+            <div class="col-md-9">
+              ${!this.isFetching ? html`<rw-paginator .total=${this.articlesCount} .currentPage=${this.currentPage}/>` : html``}
+            </div>
           </div>
         </div>
       </div>

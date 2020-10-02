@@ -11,6 +11,9 @@ export default (intents) => {
     .on('/signin', () => {
       intents.setPage('signin')
     })
+    .on('/signup', () => {
+      intents.setPage('signup')
+    })
     .on('/home', () => {
       intents.setPage('home')
       intents.start()

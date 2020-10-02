@@ -29,6 +29,7 @@ export default {
     tags: undefined,
     articles: undefined,
     currentTab: 'globalfeed',
+    currentPage: 1,
     tabInfos: {
       globalFeed: {
         name: 'Global Feed',
@@ -56,5 +57,10 @@ export default {
 
   isPersonalTab () {
     return this.home.currentTab === PERSONAL_FEED_ID
+  },
+  excludeTagTab () {
+    this.home.tabs = this.home.tabs.filter(t => {
+      return t.id === GLOBAL_FEED_ID || t.id === PERSONAL_FEED_ID
+    })
   }
 }

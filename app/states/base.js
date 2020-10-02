@@ -1,4 +1,5 @@
 import { pages, PERSONAL_FEED_ID } from '../constants'
+import { isEmptyArray } from '../utils'
 import {
   start,
   redirected,
@@ -16,29 +17,40 @@ export default {
     },
     model => ({ starting, user }) => {
       if (starting) {
+        const {
+          personalFeed, globalFeed
+        } = model.home.tabInfos
+
+        const {
+          nav: { home, editor, settings, signin, signup }
+        } = model
+
         if (user && !model.user) {
           model.user = user
           model.isAuthenticated = true
           model.home.currentTab = PERSONAL_FEED_ID
+        }
 
-          const {
-            nav: { home, editor, settings }
-          } = model
+        if (model.isAuthenticated) {
           model.header = [home, editor, settings]
 
-          const {
-            personalFeed, globalFeed
-          } = model.home.tabInfos
-          model.home.tabs = [personalFeed, globalFeed]
-        } else {
-          const {
-            nav: { home, signin, signup }
-          } = model
+          if (isEmptyArray(model.home.tabs)) {
+            model.home.tabs = [personalFeed, globalFeed]
+          } else {
+            const hasPersonalTab = model.home.tabs.some(t => {
+              return t.id === personalFeed.id
+            })
 
+            if (!hasPersonalTab) {
+              model.home.tabs.unshift(personalFeed)
+            }
+          }
+        } else {
           model.header = [home, signin, signup]
 
-          const { globalFeed } = model.home.tabInfos
-          model.home.tabs = [globalFeed]
+          if (isEmptyArray(model.home.tabs)) {
+            model.home.tabs = [globalFeed]
+          }
         }
       }
       return model
@@ -62,6 +74,7 @@ export default {
       return model
     }
   ],
+
   actions: [
     start,
     redirected,

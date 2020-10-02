@@ -1,4 +1,5 @@
 import './rw_signin'
+import './rw_signup'
 import './rw_tags'
 import './rw_article_summary'
 import './rw_paginator'

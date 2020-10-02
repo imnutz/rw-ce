@@ -23,6 +23,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
+    "dayjs": "^1.9.1",
     "rollup": "^2.27.1",
     "standard": "^14.3.4"
   }

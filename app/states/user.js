@@ -1,6 +1,7 @@
 import storage from '../storage'
 import {
-  signin
+  signin,
+  signup
 } from '../actions/user'
 
 import {
@@ -30,10 +31,29 @@ export default {
       }
 
       return model
+    },
+
+    model => ({ data = {} }) => {
+      const registered = data.registered
+      if (registered) {
+        const { user, errors } = data.userInfo
+
+        if (errors) {
+          model.registrationErrors = errors
+        } else if (user) {
+          model.user = user
+          model.registrationErrors = {}
+          model.redirectPage = pages.HOME
+          model.isAuthenticated = true
+          model.home.currentTab = PERSONAL_FEED_ID
+          storage.setItem(STORAGE_USER_KEY, user)
+        }
+      }
     }
   ],
 
   actions: [
-    signin
+    signin,
+    signup
   ]
 }
