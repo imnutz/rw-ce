@@ -13,7 +13,8 @@ define(componentName, {
     currentTab: null,
     isFetching: false,
     isPaginating: false,
-    pageLimit: 0
+    pageLimit: 0,
+    isAuthenticated: false
   },
 
   _feedToggleHandler (evt) {
@@ -63,16 +64,21 @@ define(componentName, {
     `
   },
 
+  _getBanner () {
+    return html`
+      <div class="banner">
+        <div class="container">
+          <h1 class="logo-font">conduit</h1>
+          <p>A place to share your knowledge.</p>
+        </div>
+      </div>
+    `
+  },
+
   render () {
     return this.html`
       <div class="home-page">
-        <div class="banner">
-          <div class="container">
-            <h1 class="logo-font">conduit</h1>
-            <p>A place to share your knowledge.</p>
-          </div>
-        </div>
-
+        ${!this.isAuthenticated ? this._getBanner() : html``}
         <div class="container page">
           <div class="row">
             <div class="col-md-9">

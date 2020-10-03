@@ -26,6 +26,7 @@ export default {
           model.isAuthenticated = true
 
           model.home.currentTab = PERSONAL_FEED_ID
+          model.home.currentPage = 1
           storage.setItem(STORAGE_USER_KEY, user)
         }
       }
@@ -46,6 +47,7 @@ export default {
           model.redirectPage = pages.HOME
           model.isAuthenticated = true
           model.home.currentTab = PERSONAL_FEED_ID
+          model.home.currentPage = 1
           storage.setItem(STORAGE_USER_KEY, user)
         }
       }

@@ -72,6 +72,7 @@ define(componentName, {
         .isFetching=${this.state.fetchingArticles}
         .isPaginating=${this.state.paginating}
         .pageLimit=${PAGE_LIMIT}
+        .isAuthenticated=${this.state.isAuthenticated}
       />
     `
   },
