@@ -1,5 +1,9 @@
 import { pages } from '../constants'
-import { toggleFeed, selectTag } from '../actions/home'
+import {
+  toggleFeed,
+  selectTag,
+  selectPage
+} from '../actions/home'
 import {
   fetchArticles,
   fetchFeeds,
@@ -9,8 +13,10 @@ import {
 export default {
   acceptors: [
     model => ({ articles }) => {
-      if (model.page === pages.HOME && articles && model.fetchingArticles) {
+      if (model.page === pages.HOME && articles && (model.fetchingArticles || model.paginating)) {
         model.fetchingArticles = false
+        model.paginating = false
+        model.home.pageChanged = false
         model.home.articles = articles.articles
         model.home.articlesCount = articles.articlesCount
       }
@@ -29,6 +35,7 @@ export default {
           model.excludeTagTab()
           model.home.currentTab = tabId
           model.home.articles = undefined
+          model.home.currentPage = 1
         }
       }
 
@@ -43,9 +50,18 @@ export default {
         })
         model.home.currentTab = tagName
         model.home.articles = undefined
+        model.home.currentPage = 1
       }
 
       return model
+    },
+    model => ({ pageNumber }) => {
+      if (pageNumber) {
+        if (model.home.currentPage !== pageNumber) {
+          model.home.currentPage = pageNumber
+          model.home.pageChanged = true
+        }
+      }
     }
   ],
 
@@ -58,12 +74,17 @@ export default {
       if (model.isHome() && !model.home.tags) {
         model.fetchingTags = true
       }
+
+      if (model.isHome() && model.home.pageChanged) {
+        model.paginating = true
+      }
     }
   ],
 
   actions: [
     toggleFeed,
     selectTag,
+    selectPage,
     fetchArticles,
     fetchFeeds,
     fetchTags

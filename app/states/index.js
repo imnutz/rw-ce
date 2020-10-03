@@ -15,7 +15,6 @@ samInstance.addInitialState(initialState)
 
 // setup components
 const [
-  start,
   redirected,
   setPage
 ] = samInstance.addComponent(base).intents
@@ -23,6 +22,7 @@ const [
 const [
   toggleFeed,
   selectTag,
+  selectPage,
   fetchArticles,
   fetchFeeds,
   fetchTags
@@ -34,7 +34,6 @@ const [
 ] = samInstance.addComponent(user).intents
 
 const intents = {
-  start,
   redirected,
   setPage,
   toggleFeed,
@@ -43,7 +42,8 @@ const intents = {
   fetchFeeds,
   fetchTags,
   signin,
-  signup
+  signup,
+  selectPage
 }
 
 export default {

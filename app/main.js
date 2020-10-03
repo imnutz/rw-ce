@@ -1,5 +1,5 @@
 import { define, html } from 'uce'
-import { pages } from './constants'
+import { pages, PAGE_LIMIT } from './constants'
 
 import './ce'
 
@@ -35,6 +35,11 @@ define(componentName, {
     this.intents.selectTag(evt.detail.tag)
   },
 
+  onpaginate (evt) {
+    const page = evt.detail.pageNumber
+    this.intents.selectPage(page)
+  },
+
   _getPage () {
     const page = this.state.page
     if (page === pages.SIGNIN) {
@@ -65,6 +70,8 @@ define(componentName, {
         .tags=${tags}
         .currentTab=${currentTab}
         .isFetching=${this.state.fetchingArticles}
+        .isPaginating=${this.state.paginating}
+        .pageLimit=${PAGE_LIMIT}
       />
     `
   },

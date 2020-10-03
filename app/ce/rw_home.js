@@ -11,7 +11,9 @@ define(componentName, {
     currentPage: 1,
     tags: [],
     currentTab: null,
-    isFetching: false
+    isFetching: false,
+    isPaginating: false,
+    pageLimit: 0
   },
 
   _feedToggleHandler (evt) {
@@ -55,7 +57,7 @@ define(componentName, {
 
   _getLoading () {
     return html`
-      <div class="loading">
+      <div class="loading article-preview">
         Loading articles...
       </div>
     `
@@ -79,6 +81,7 @@ define(componentName, {
               </div>
 
               ${this.isFetching ? this._getLoading() : this._getArticles(this.articles)}
+              ${this.isPaginating ? this._getLoading() : html``}
             </div>
 
             <div class="col-md-3">
@@ -90,7 +93,7 @@ define(componentName, {
 
           <div class="row">
             <div class="col-md-9">
-              ${!this.isFetching ? html`<rw-paginator .total=${this.articlesCount} .currentPage=${this.currentPage}/>` : html``}
+              ${!this.isFetching ? html`<rw-paginator .pageLimit=${this.pageLimit} .total=${this.articlesCount} .currentPage=${this.currentPage}/>` : html``}
             </div>
           </div>
         </div>

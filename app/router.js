@@ -6,7 +6,6 @@ export default (intents) => {
   navigo
     .on('/', () => {
       intents.setPage('home')
-      intents.start()
     })
     .on('/signin', () => {
       intents.setPage('signin')
@@ -16,7 +15,6 @@ export default (intents) => {
     })
     .on('/home', () => {
       intents.setPage('home')
-      intents.start()
     })
 
   return navigo

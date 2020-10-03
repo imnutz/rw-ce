@@ -5,7 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "standard && rollup --config"
+    "build": "standard && rollup --config",
+    "sd-fix": "standard --fix"
   },
   "standard": {
     "globals": [

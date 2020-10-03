@@ -1,3 +1,4 @@
+import { PAGE_LIMIT } from '../constants'
 export default (sam, router, intents) => {
   sam.addNAPs([
     model => _ => {
@@ -13,14 +14,16 @@ export default (sam, router, intents) => {
     model => _ => {
       if (model.isHome() && !model.fetchingArticles && model.fetchingTags) return true
 
-      const isHomeAndFetching = model.isHome() && model.fetchingArticles
+      const isHomeAndFetching = model.isHome() && (model.fetchingArticles || model.paginating)
+      const page = model.home.currentPage - 1
+      const offset = page * PAGE_LIMIT
 
       if (isHomeAndFetching && model.isGlobalTab()) {
-        intents.fetchArticles(0)
+        intents.fetchArticles(offset, PAGE_LIMIT)
       } else if (isHomeAndFetching && model.isPersonalTab()) {
-        intents.fetchFeeds(model.user.token, 0)
+        intents.fetchFeeds(model.user.token, offset, PAGE_LIMIT)
       } else if (isHomeAndFetching && model.isTagTab()) {
-        intents.fetchArticles(0, 10, model.home.currentTab)
+        intents.fetchArticles(offset, PAGE_LIMIT, model.home.currentTab)
       }
 
       if (model.isHome() && model.fetchingTags) {

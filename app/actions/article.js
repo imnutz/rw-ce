@@ -6,7 +6,7 @@ export const fetchArticles = (...params) => {
 }
 
 export const fetchFeeds = (token, offset, limit) => {
-  return getFeeds(token, 0)
+  return getFeeds(token, offset)
     .then(data => ({ articles: data }))
 }
 
