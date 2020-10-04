@@ -5,9 +5,10 @@ import {
 
 export const redirected = () => ({ redirected: true })
 
-export const setPage = (page) => {
+export const setPage = (page, options) => {
   return {
     page,
-    user: storage.getItem(STORAGE_USER_KEY)
+    user: storage.getItem(STORAGE_USER_KEY),
+    ...options
   }
 }

@@ -4,10 +4,22 @@ import dayjs from 'dayjs'
 const componentName = 'rw-article-summary'
 
 define(componentName, {
-  bound: ['render'],
+  bound: ['render', '_favorite'],
   props: {
     article: null
   },
+
+  _favorite (evt) {
+    evt.preventDefault()
+
+    this.dispatchEvent(new CustomEvent('favorite', {
+      bubbles: true,
+      detail: {
+        slug: this.article.slug
+      }
+    }))
+  },
+
   render () {
     if (!this.article) return this.html``
 
@@ -21,11 +33,11 @@ define(componentName, {
             <a href="" class="author">${this.article.author.username}</a>
             <span class="date">${timestamp.format('MMMM DD, YYYY')}</span>
           </div>
-          <button class="btn btn-outline-primary btn-sm pull-xs-right">
+          <button class="btn btn-outline-primary btn-sm pull-xs-right" onclick=${this._favorite}>
             <i class="ion-heart"></i> ${this.article.favoritesCount}
           </button>
         </div>
-        <a href="" class="preview-link">
+        <a href=${`#/article/${this.article.slug}`} class="preview-link">
           <h1>${this.article.title}</h1>
           <p>${this.article.description}</p>
           <span>Read more...</span>

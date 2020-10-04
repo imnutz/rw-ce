@@ -5,6 +5,7 @@ import initialState from './initial_state'
 import base from './base'
 import user from './user'
 import home from './home'
+import articleDetail from './article_detail'
 
 const { api, createInstance } = sam
 
@@ -25,12 +26,20 @@ const [
   selectPage,
   fetchArticles,
   fetchFeeds,
-  fetchTags
+  fetchTags,
+  favoriteArticle,
+  setFavorite
 ] = samInstance.addComponent(home).intents
 
 const [
+  fetchArticleAndComments
+] = samInstance.addComponent(articleDetail).intents
+
+const [
   signin,
-  signup
+  signup,
+  setFollow,
+  followUser
 ] = samInstance.addComponent(user).intents
 
 const intents = {
@@ -43,7 +52,12 @@ const intents = {
   fetchTags,
   signin,
   signup,
-  selectPage
+  selectPage,
+  favoriteArticle,
+  setFavorite,
+  fetchArticleAndComments,
+  setFollow,
+  followUser
 }
 
 export default {

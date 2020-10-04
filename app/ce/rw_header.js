@@ -9,10 +9,11 @@ define(componentName, {
   },
 
   _getNavItem (data) {
+    const icon = data.icon ? html`<icon class=${data.icon}</icon>` : html``
     return html`
       <li class="nav-item">
         <a class="nav-link" href=${`#${data.path}`}>
-          <i class="ion-compose"></i>&nbsp;${data.name}
+          ${icon}&nbsp;${data.name}
         </a>
       </li>
   

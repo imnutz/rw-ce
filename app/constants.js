@@ -7,5 +7,6 @@ export const PAGE_LIMIT = 10
 export const pages = {
   HOME: 'home',
   SIGNIN: 'signin',
-  SIGNUP: 'signup'
+  SIGNUP: 'signup',
+  ARTICLE: 'article'
 }

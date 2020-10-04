@@ -16,6 +16,10 @@ export default (intents) => {
     .on('/home', () => {
       intents.setPage('home')
     })
+    .on('/article/:slug', (params) => {
+      const slug = params.slug
+      intents.setPage('article', { slug })
+    })
 
   return navigo
 }

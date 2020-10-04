@@ -21,41 +21,41 @@ export default {
 
         if (model.page === pages.HOME) {
           model.home.articles = undefined
+        }
 
-          const {
-            personalFeed, globalFeed
-          } = model.home.tabInfos
+        const {
+          personalFeed, globalFeed
+        } = model.home.tabInfos
 
-          const {
-            nav: { home, editor, settings, signin, signup }
-          } = model
+        const {
+          nav: { home, editor, settings, signin, signup }
+        } = model
 
-          if (user && !model.user) {
-            model.user = user
-            model.isAuthenticated = true
-            model.home.currentTab = PERSONAL_FEED_ID
-          }
+        if (user && !model.user) {
+          model.user = user
+          model.isAuthenticated = true
+          model.home.currentTab = PERSONAL_FEED_ID
+        }
 
-          if (model.isAuthenticated) {
-            model.header = [home, editor, settings]
+        if (model.isAuthenticated) {
+          model.header = [home, editor, settings]
 
-            if (isEmptyArray(model.home.tabs)) {
-              model.home.tabs = [personalFeed, globalFeed]
-            } else {
-              const hasPersonalTab = model.home.tabs.some(t => {
-                return t.id === personalFeed.id
-              })
-
-              if (!hasPersonalTab) {
-                model.home.tabs.unshift(personalFeed)
-              }
-            }
+          if (isEmptyArray(model.home.tabs)) {
+            model.home.tabs = [personalFeed, globalFeed]
           } else {
-            model.header = [home, signin, signup]
+            const hasPersonalTab = model.home.tabs.some(t => {
+              return t.id === personalFeed.id
+            })
 
-            if (isEmptyArray(model.home.tabs)) {
-              model.home.tabs = [globalFeed]
+            if (!hasPersonalTab) {
+              model.home.tabs.unshift(personalFeed)
             }
+          }
+        } else {
+          model.header = [home, signin, signup]
+
+          if (isEmptyArray(model.home.tabs)) {
+            model.home.tabs = [globalFeed]
           }
         }
       }
@@ -65,6 +65,29 @@ export default {
     model => ({ redirected = false }) => {
       if (redirected) {
         model.redirectPage = null
+      }
+
+      return model
+    },
+
+    model => ({ favoritedArticle }) => {
+      if (favoritedArticle && model.isHome()) {
+        const length = model.home.articles.length
+        for (var i = 0; i < length; i++) {
+          if (model.home.articles[i].slug === favoritedArticle.slug) {
+            model.home.articles[i].favoritesCount = favoritedArticle.favoritesCount
+            model.home.articles[i].favorited = favoritedArticle.favorited
+          }
+        }
+
+        model.favorite = false
+        model.foundArticle = undefined
+      } else if (favoritedArticle && model.isArticlePage()) {
+        model.articleDetail.favorited = favoritedArticle.favorited
+        model.articleDetail.favoritesCount = favoritedArticle.favoritesCount
+
+        model.favorite = false
+        model.foundArticle = undefined
       }
 
       return model

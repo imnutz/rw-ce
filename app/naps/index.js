@@ -31,6 +31,38 @@ export default (sam, router, intents) => {
       }
 
       return false
+    },
+
+    model => _ => {
+      if (model.favorite && model.foundArticle) {
+        intents.favoriteArticle(model.user.token, model.foundArticle.slug, model.foundArticle.favorited)
+
+        return true
+      }
+
+      return false
+    },
+
+    model => _ => {
+      if (model.isArticlePage() && model.fetchingArticleDetail) {
+        const token = model.user ? model.user.token : null
+        intents.fetchArticleAndComments(model.articleSlug, token)
+
+        return true
+      }
+
+      return false
+    },
+
+    model => _ => {
+      if (model.isArticlePage() && model.followUser) {
+        const token = model.user ? model.user.token : null
+
+        intents.followUser(token, model.followUser, model.following)
+        return true
+      }
+
+      return false
     }
   ])
 }

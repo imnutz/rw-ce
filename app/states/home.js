@@ -7,7 +7,9 @@ import {
 import {
   fetchArticles,
   fetchFeeds,
-  fetchTags
+  fetchTags,
+  favoriteArticle,
+  setFavorite
 } from '../actions/article'
 
 export default {
@@ -62,6 +64,27 @@ export default {
           model.home.pageChanged = true
         }
       }
+    },
+    model => ({ favorite, slug }) => {
+      if (favorite && slug) {
+        if (!model.isAuthenticated) {
+          model.redirectPage = pages.SIGNUP
+        } else {
+          var foundArticle
+          if (model.isHome()) {
+            foundArticle = model.findHomeArticle(slug)
+          } else if (model.isArticlePage()) {
+            foundArticle = model.articleDetail
+          }
+
+          if (foundArticle) {
+            model.favorite = favorite
+            model.foundArticle = foundArticle
+          }
+        }
+      }
+
+      return model
     }
   ],
 
@@ -87,7 +110,9 @@ export default {
     selectPage,
     fetchArticles,
     fetchFeeds,
-    fetchTags
+    fetchTags,
+    favoriteArticle,
+    setFavorite
   ],
 
   options: {

@@ -1,7 +1,9 @@
 import storage from '../storage'
 import {
   signin,
-  signup
+  signup,
+  setFollow,
+  followUser
 } from '../actions/user'
 
 import {
@@ -51,11 +53,36 @@ export default {
           storage.setItem(STORAGE_USER_KEY, user)
         }
       }
+    },
+
+    model => ({ username, following }) => {
+      if (username) {
+        if (!model.isAuthenticated) {
+          model.redirectPage = pages.SIGNUP
+        } else {
+          model.following = following
+          model.followUser = username
+        }
+      }
+
+      return model
+    },
+
+    model => ({ followedProfile }) => {
+      if (followedProfile) {
+        model.followUser = undefined
+
+        model.articleDetail.author.following = followedProfile.following
+      }
+
+      return model
     }
   ],
 
   actions: [
     signin,
-    signup
+    signup,
+    setFollow,
+    followUser
   ]
 }

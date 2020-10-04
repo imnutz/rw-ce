@@ -50,6 +50,42 @@ export const getArticles = (offset = 0, limit = 10, tag = '') => {
   }).then(response => response.json())
 }
 
+export const getArticle = (slug, token) => {
+  const endpoint = getEndpoint(`/articles/${slug}`)
+
+  var headers
+  if (token) {
+    headers = {
+      ...header,
+      ...getAuthHeader(token)
+    }
+  } else {
+    headers = { ...header }
+  }
+
+  return fetch(endpoint, {
+    headers
+  }).then(response => response.json())
+}
+
+export const getComments = (slug, token) => {
+  const endpoint = getEndpoint(`/articles/${slug}/comments`)
+
+  var headers
+  if (token) {
+    headers = {
+      ...header,
+      ...getAuthHeader(token)
+    }
+  } else {
+    headers = { ...header }
+  }
+
+  return fetch(endpoint, {
+    headers
+  }).then(response => response.json())
+}
+
 export const getFeeds = (token, offset = 0, limit = 10) => {
   const endpoint = getEndpoint(`/articles/feed?limit=${limit}&offset=${offset}`)
 
@@ -83,4 +119,30 @@ export const register = (username, email, password) => {
         userInfo: data
       }
     })
+}
+
+export const favorite = (token, slug, isDelete) => {
+  const endpoint = getEndpoint(`/articles/${slug}/favorite`)
+  const method = isDelete ? 'DELETE' : 'POST'
+
+  return fetch(endpoint, {
+    method,
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    }
+  }).then(response => response.json())
+}
+
+export const follow = (token, username, isDelete) => {
+  const endpoint = getEndpoint(`/profiles/${username}/follow`)
+  const method = isDelete ? 'DELETE' : 'POST'
+
+  return fetch(endpoint, {
+    method,
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    }
+  }).then(response => response.json())
 }

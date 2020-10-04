@@ -40,6 +40,16 @@ define(componentName, {
     this.intents.selectPage(page)
   },
 
+  onfavorite (evt) {
+    const slug = evt.detail.slug
+    this.intents.setFavorite(slug)
+  },
+
+  onfollow (evt) {
+    const { following, username } = evt.detail
+    this.intents.setFollow(username, following)
+  },
+
   _getPage () {
     const page = this.state.page
     if (page === pages.SIGNIN) {
@@ -49,6 +59,14 @@ define(componentName, {
     } else if (page === pages.SIGNUP) {
       return html`
         <rw-signup .errors=${this.state.registrationErrors}/>
+      `
+    } else if (page === pages.ARTICLE) {
+      return html`
+        <rw-article-detail 
+          .article=${this.state.articleDetail} 
+          .comments=${this.state.articleComments}
+          .isAuthenticated=${this.state.isAuthenticated}
+        />
       `
     }
 

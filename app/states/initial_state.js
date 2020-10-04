@@ -8,11 +8,13 @@ export default {
     },
     editor: {
       name: 'New Post',
-      path: '/editor'
+      path: '/editor',
+      icon: 'ion-compose'
     },
     settings: {
       name: 'Settings',
-      path: '/settings'
+      path: '/settings',
+      icon: 'ion-gear-a'
     },
     signin: {
       name: 'Sign In',
@@ -47,6 +49,10 @@ export default {
     return this.page === pages.HOME
   },
 
+  isArticlePage () {
+    return this.page === pages.ARTICLE
+  },
+
   isTagTab () {
     return this.home.currentTab !== GLOBAL_FEED_ID && this.home.currentTab !== PERSONAL_FEED_ID
   },
@@ -61,6 +67,12 @@ export default {
   excludeTagTab () {
     this.home.tabs = this.home.tabs.filter(t => {
       return t.id === GLOBAL_FEED_ID || t.id === PERSONAL_FEED_ID
+    })
+  },
+
+  findHomeArticle (slug) {
+    return this.home.articles.find(article => {
+      return article.slug === slug
     })
   }
 }
