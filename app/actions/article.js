@@ -4,7 +4,8 @@ import {
   getTags,
   favorite,
   getArticle,
-  getComments
+  getComments,
+  deleteComment
 } from '../api'
 
 export const fetchArticles = (...params) => {
@@ -50,3 +51,7 @@ export const fetchArticleAndComments = (slug, token) => {
 }
 
 export const setFavorite = (slug) => ({ favorite: true, slug })
+
+export const removeComment = (token, slug, commentId) => {
+  return deleteComment(token, slug, commentId).then(data => ({deletedCommentId: commentId}))
+}

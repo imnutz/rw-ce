@@ -146,3 +146,15 @@ export const follow = (token, username, isDelete) => {
     }
   }).then(response => response.json())
 }
+
+export const deleteCommend = (token, slug, commentId) => {
+  const endpoint = getEndpoint(`/articles/${slug}/comments/${commentId}`)
+
+  return fetch(endpoint, {
+    method: 'DELETE',
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    }
+  }).then(response => response.json())
+}

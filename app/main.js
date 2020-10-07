@@ -66,6 +66,7 @@ define(componentName, {
           .article=${this.state.articleDetail} 
           .comments=${this.state.articleComments}
           .isAuthenticated=${this.state.isAuthenticated}
+          .currentUser=${this.state.user}
         />
       `
     }

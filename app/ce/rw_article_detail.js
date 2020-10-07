@@ -10,12 +10,14 @@ define(componentName, {
     '_getFavoriteButton',
     '_getCommentsForm',
     '_followHandler',
-    '_favoriteHandler'
+    '_favoriteHandler',
+    '_deleteComment'
   ],
   props: {
     article: undefined,
     comments: undefined,
-    isAuthenticated: false
+    isAuthenticated: false,
+    currentUser: undefined
   },
 
   _followHandler (evt) {
@@ -40,6 +42,17 @@ define(componentName, {
       detail: {
         slug: this.article.slug
       }
+    }))
+  },
+
+  _deleteComment (evt) {
+    evt.preventDefault()
+
+    const commentId = Number(evt.target.getAttribute('data-cid'))
+
+    this.dispatchEvent(new CustomEvent('deletecomment', {
+      bubbles: true,
+      detail: { commentId, slug: this.article.slug }
     }))
   },
 
@@ -93,8 +106,10 @@ define(componentName, {
         ${
           this.comments.map(comment => {
             const timestamp = dayjs(comment.createdAt, 'YYYY-MM-DD')
+            const showTrashBtn = this.currentUser && this.currentUser.username === comment.author.username
+
             return html`
-              <div class="card">
+              <div class="card" onclick=${this._deleteComment}>
                 <div class="card-block">
                   <p class="card-text">${comment.body}</p>
                 </div>
@@ -105,6 +120,12 @@ define(componentName, {
                   &nbsp;
                   <a href="" class="comment-author">${comment.author.username}</a>
                   <span class="date-posted">${timestamp.format('MMMM DD, YYYY')}</span>
+                  ${showTrashBtn ? html`
+                      <span class="mod-options">
+                        <i class="ion-trash-a" data-cid=${comment.id}></i>
+                      </span>
+                    ` : html``
+                  }
                 </div>
               </div>
             `
@@ -126,6 +147,7 @@ define(componentName, {
         </div>
       `
     }
+    const imgSrc = this.currentUser ? this.currentUser.image : ''
     return html`
       <div class="row">
         <div class="col-xs-12 col-md-8 offset-md-2">
@@ -134,7 +156,7 @@ define(componentName, {
               <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
             </div>
             <div class="card-footer">
-              <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />
+              <img src=${imgSrc} class="comment-author-img" />
               <button class="btn btn-sm btn-primary">
                Post Comment
               </button>
