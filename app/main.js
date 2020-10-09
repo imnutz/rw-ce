@@ -82,6 +82,8 @@ define(componentName, {
           .currentUser=${this.state.user}
         />
       `
+    } else if (page === pages.EDITOR) {
+      return html`<rw-editor/>`
     }
 
     const homeState = this.state.home

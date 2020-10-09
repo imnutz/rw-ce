@@ -16,6 +16,9 @@ export default (intents) => {
     .on('/home', () => {
       intents.setPage('home')
     })
+    .on('/editor', () => {
+      intents.setPage('editor')
+    })
     .on('/article/:slug', (params) => {
       const slug = params.slug
       intents.setPage('article', { slug })

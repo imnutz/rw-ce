@@ -8,5 +8,6 @@ export const pages = {
   HOME: 'home',
   SIGNIN: 'signin',
   SIGNUP: 'signup',
-  ARTICLE: 'article'
+  ARTICLE: 'article',
+  EDITOR: 'editor'
 }

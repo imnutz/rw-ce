@@ -62,3 +62,5 @@ export const removeComment = (token, slug, commentId) => {
 export const postComment = (token, slug, comment) => {
   return saveComment(token, slug, comment).then(data => ({ savedComment: data.comment }))
 }
+
+export const publishArticle = (title, description, body, tags) => ({ title, description, body, tags })
