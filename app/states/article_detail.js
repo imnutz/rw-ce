@@ -1,5 +1,9 @@
 import {
-  fetchArticleAndComments
+  fetchArticleAndComments,
+  setDeletedComment,
+  removeComment,
+  postComment,
+  setNewComment
 } from '../actions/article'
 export default {
   acceptors: [
@@ -22,10 +26,52 @@ export default {
       }
 
       return model
+    },
+
+    model => ({ deletedCommentId }) => {
+      if (deletedCommentId) {
+        model.deletedCommentId = deletedCommentId
+      }
+
+      return model
+    },
+
+    model => ({ commentDeleted }) => {
+      if (commentDeleted && model.isArticlePage()) {
+        const currentComments = model.articleComments
+        model.articleComments = currentComments.filter(comment => {
+          return comment.id !== model.deletedCommentId
+        })
+
+        model.deletedCommentId = undefined
+      }
+
+      return model
+    },
+
+    model => ({ newComment }) => {
+      if (model.isArticlePage() && newComment) {
+        model.newComment = newComment
+      }
+
+      return model
+    },
+
+    model => ({ savedComment }) => {
+      if (savedComment) {
+        model.articleComments.unshift(savedComment)
+        model.newComment = undefined
+      }
+
+      return model
     }
   ],
 
   actions: [
-    fetchArticleAndComments
+    fetchArticleAndComments,
+    setDeletedComment,
+    removeComment,
+    postComment,
+    setNewComment
   ]
 }

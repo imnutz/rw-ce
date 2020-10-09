@@ -50,6 +50,19 @@ define(componentName, {
     this.intents.setFollow(username, following)
   },
 
+  ondeletecomment (evt) {
+    const {
+      commentId
+    } = evt.detail
+
+    this.intents.setDeletedComment(commentId)
+  },
+
+  onpostcomment (evt) {
+    const comment = evt.detail.comment
+    this.intents.setNewComment(comment)
+  },
+
   _getPage () {
     const page = this.state.page
     if (page === pages.SIGNIN) {

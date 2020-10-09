@@ -63,6 +63,30 @@ export default (sam, router, intents) => {
       }
 
       return false
+    },
+
+    model => _ => {
+      if (model.isArticlePage() && model.deletedCommentId) {
+        const token = model.user ? model.user.token : null
+        intents.removeComment(token, model.articleDetail.slug, model.deletedCommentId)
+        return true
+      }
+
+      return false
+    },
+
+    model => _ => {
+      if (model.isArticlePage() && model.newComment) {
+        const token = model.user ? model.user.token : null
+        intents.postComment(token, model.articleDetail.slug, model.newComment)
+
+        // reset input field value
+        document.querySelector('.article-comment-input').value = ''
+
+        return true
+      }
+
+      return false
     }
   ])
 }

@@ -11,13 +11,35 @@ define(componentName, {
     '_getCommentsForm',
     '_followHandler',
     '_favoriteHandler',
-    '_deleteComment'
+    '_deleteComment',
+    '_postCommentHandler'
   ],
   props: {
     article: undefined,
     comments: undefined,
     isAuthenticated: false,
     currentUser: undefined
+  },
+
+  init () {
+    this.inputRef = {}
+
+    this.render()
+  },
+
+  _postCommentHandler (evt) {
+    evt.preventDefault()
+
+    const value = this.inputRef.current.value
+
+    if (value) {
+      this.dispatchEvent(new CustomEvent('postcomment', {
+        bubbles: true,
+        detail: {
+          comment: value
+        }
+      }))
+    }
   },
 
   _followHandler (evt) {
@@ -52,7 +74,7 @@ define(componentName, {
 
     this.dispatchEvent(new CustomEvent('deletecomment', {
       bubbles: true,
-      detail: { commentId, slug: this.article.slug }
+      detail: { commentId }
     }))
   },
 
@@ -153,11 +175,11 @@ define(componentName, {
         <div class="col-xs-12 col-md-8 offset-md-2">
           <form class="card comment-form">
             <div class="card-block">
-              <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+              <textarea class="form-control article-comment-input" placeholder="Write a comment..." rows="3" ref=${this.inputRef}></textarea>
             </div>
             <div class="card-footer">
               <img src=${imgSrc} class="comment-author-img" />
-              <button class="btn btn-sm btn-primary">
+              <button class="btn btn-sm btn-primary" onclick=${this._postCommentHandler}>
                Post Comment
               </button>
             </div>

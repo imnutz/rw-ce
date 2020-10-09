@@ -147,7 +147,7 @@ export const follow = (token, username, isDelete) => {
   }).then(response => response.json())
 }
 
-export const deleteCommend = (token, slug, commentId) => {
+export const deleteComment = (token, slug, commentId) => {
   const endpoint = getEndpoint(`/articles/${slug}/comments/${commentId}`)
 
   return fetch(endpoint, {
@@ -156,5 +156,23 @@ export const deleteCommend = (token, slug, commentId) => {
       ...header,
       ...getAuthHeader(token)
     }
+  }).then(response => response.json())
+}
+
+export const saveComment = (token, slug, comment) => {
+  const endpoint = getEndpoint(`/articles/${slug}/comments`)
+  const data = {
+    comment: {
+      body: comment
+    }
+  }
+
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    },
+    body: JSON.stringify(data)
   }).then(response => response.json())
 }

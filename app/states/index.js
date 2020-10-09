@@ -32,7 +32,11 @@ const [
 ] = samInstance.addComponent(home).intents
 
 const [
-  fetchArticleAndComments
+  fetchArticleAndComments,
+  setDeletedComment,
+  removeComment,
+  postComment,
+  setNewComment
 ] = samInstance.addComponent(articleDetail).intents
 
 const [
@@ -57,7 +61,11 @@ const intents = {
   setFavorite,
   fetchArticleAndComments,
   setFollow,
-  followUser
+  followUser,
+  setDeletedComment,
+  removeComment,
+  postComment,
+  setNewComment
 }
 
 export default {

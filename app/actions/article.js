@@ -5,7 +5,8 @@ import {
   favorite,
   getArticle,
   getComments,
-  deleteComment
+  deleteComment,
+  saveComment
 } from '../api'
 
 export const fetchArticles = (...params) => {
@@ -51,7 +52,13 @@ export const fetchArticleAndComments = (slug, token) => {
 }
 
 export const setFavorite = (slug) => ({ favorite: true, slug })
+export const setDeletedComment = (commentId) => ({ deletedCommentId: commentId })
+export const setNewComment = (comment) => ({ newComment: comment })
 
 export const removeComment = (token, slug, commentId) => {
-  return deleteComment(token, slug, commentId).then(data => ({deletedCommentId: commentId}))
+  return deleteComment(token, slug, commentId).then(data => ({ commentDeleted: true }))
+}
+
+export const postComment = (token, slug, comment) => {
+  return saveComment(token, slug, comment).then(data => ({ savedComment: data.comment }))
 }
