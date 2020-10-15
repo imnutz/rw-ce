@@ -6,7 +6,8 @@ import {
   getArticle,
   getComments,
   deleteComment,
-  saveComment
+  saveComment,
+  createArticle
 } from '../api'
 
 export const fetchArticles = (...params) => {
@@ -63,4 +64,17 @@ export const postComment = (token, slug, comment) => {
   return saveComment(token, slug, comment).then(data => ({ savedComment: data.comment }))
 }
 
-export const publishArticle = (title, description, body, tags) => ({ title, description, body, tags })
+export const setNewArticleInfo = (title, description, body, tags) => {
+  const tagList = tags && tags.length ? tags.split(',') : []
+  return {
+    createArticle: true,
+    title,
+    description,
+    body,
+    tagList
+  }
+}
+
+export const publishArticle = (token, article) => {
+  return createArticle(token, article).then(data => ({ createdArticle: data.article, errors: data.errors }))
+}

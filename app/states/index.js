@@ -36,7 +36,9 @@ const [
   setDeletedComment,
   removeComment,
   postComment,
-  setNewComment
+  setNewComment,
+  setNewArticleInfo,
+  publishArticle
 ] = samInstance.addComponent(articleDetail).intents
 
 const [
@@ -65,7 +67,9 @@ const intents = {
   setDeletedComment,
   removeComment,
   postComment,
-  setNewComment
+  setNewComment,
+  setNewArticleInfo,
+  publishArticle
 }
 
 export default {

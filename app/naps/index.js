@@ -87,6 +87,20 @@ export default (sam, router, intents) => {
       }
 
       return false
+    },
+
+    model => _ => {
+      if (model.isEditorPage() && model.createArticle) {
+        const token = model.user ? model.user.token : null
+
+        if (token) {
+          intents.publishArticle(token, model.newArticle)
+        }
+
+        return true
+      }
+
+      return false
     }
   ])
 }

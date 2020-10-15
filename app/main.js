@@ -63,6 +63,17 @@ define(componentName, {
     this.intents.setNewComment(comment)
   },
 
+  onsavearticle (evt) {
+    const {
+      title,
+      description,
+      body,
+      tags: tagList
+    } = evt.detail
+
+    this.intents.setNewArticleInfo(title, description, body, tagList)
+  },
+
   _getPage () {
     const page = this.state.page
     if (page === pages.SIGNIN) {
@@ -83,7 +94,7 @@ define(componentName, {
         />
       `
     } else if (page === pages.EDITOR) {
-      return html`<rw-editor/>`
+      return html`<rw-editor .errors=${this.state.articleCreationErrors}/>`
     }
 
     const homeState = this.state.home

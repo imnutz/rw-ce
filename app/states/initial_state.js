@@ -53,6 +53,10 @@ export default {
     return this.page === pages.ARTICLE
   },
 
+  isEditorPage () {
+    return this.page === pages.EDITOR
+  },
+
   isTagTab () {
     return this.home.currentTab !== GLOBAL_FEED_ID && this.home.currentTab !== PERSONAL_FEED_ID
   },

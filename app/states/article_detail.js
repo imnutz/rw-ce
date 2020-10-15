@@ -3,8 +3,15 @@ import {
   setDeletedComment,
   removeComment,
   postComment,
-  setNewComment
+  setNewComment,
+  setNewArticleInfo,
+  publishArticle
 } from '../actions/article'
+
+import {
+  pages
+} from '../constants'
+
 export default {
   acceptors: [
     model => ({ slug }) => {
@@ -64,6 +71,34 @@ export default {
       }
 
       return model
+    },
+
+    model => ({ createArticle, title, description, body, tagList }) => {
+      if (createArticle) {
+        model.newArticle = {
+          title,
+          description,
+          body,
+          tagList
+        }
+
+        model.createArticle = true
+      }
+
+      return model
+    },
+
+    model => ({ createdArticle, errors }) => {
+      if (errors) {
+        model.articleCreationErrors = errors
+        model.createArticle = false
+      } else if (createdArticle) {
+        model.redirectPage = pages.HOME
+
+        model.newArticle = undefined
+        model.articleCreationErrors = undefined
+        model.createArticle = false
+      }
     }
   ],
 
@@ -72,6 +107,8 @@ export default {
     setDeletedComment,
     removeComment,
     postComment,
-    setNewComment
+    setNewComment,
+    setNewArticleInfo,
+    publishArticle
   ]
 }

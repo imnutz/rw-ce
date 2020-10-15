@@ -176,3 +176,17 @@ export const saveComment = (token, slug, comment) => {
     body: JSON.stringify(data)
   }).then(response => response.json())
 }
+
+export const createArticle = (token, article) => {
+  const endpoint = getEndpoint('/articles')
+  const data = { article }
+
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    },
+    body: JSON.stringify(data)
+  }).then(response => response.json())
+}
