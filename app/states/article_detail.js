@@ -1,10 +1,14 @@
 import {
   fetchArticleAndComments,
+  fetchArticle,
   setDeletedComment,
   removeComment,
   postComment,
   setNewComment,
   setNewArticleInfo,
+  setEditedArticle,
+  setDeletedArticle,
+  removeArticle,
   publishArticle
 } from '../actions/article'
 
@@ -25,11 +29,16 @@ export default {
 
     model => ({ articleDetail, comments }) => {
       if (articleDetail) {
-        model.fetchingArticleDetail = false
-        model.articleSlug = undefined
+        if (model.isEditorPage()) {
+          model.editedArticle = articleDetail
+          model.editedSlug = undefined
+        } else {
+          model.fetchingArticleDetail = false
+          model.articleSlug = undefined
 
-        model.articleDetail = articleDetail
-        model.articleComments = comments
+          model.articleDetail = articleDetail
+          model.articleComments = comments
+        }
       }
 
       return model
@@ -99,16 +108,51 @@ export default {
         model.articleCreationErrors = undefined
         model.createArticle = false
       }
+    },
+
+    model => ({ editedSlug }) => {
+      if (editedSlug) {
+        model.editedSlug = editedSlug
+      }
+    },
+    model => ({ editedArticleDetail }) => {
+      if (editedArticleDetail) {
+        model.editedArticleDetail = editedArticleDetail
+      }
+    },
+    model => ({ updatedArticle, errors }) => {
+      if (errors) {
+        model.articleCreationErrors = errors
+        model.editedArticleDetail = undefined
+      } else if (updatedArticle) {
+        model.redirectPage = pages.HOME
+        model.editedArticleDetail = undefined
+      }
+    },
+    model => ({ deletedSlug }) => {
+      if (deletedSlug) {
+        model.deletedSlug = deletedSlug
+      }
+    },
+    model => ({ articleDeleted }) => {
+      if (articleDeleted) {
+        model.redirectPage = pages.HOME
+        model.deletedSlug = undefined
+      }
     }
   ],
 
   actions: [
     fetchArticleAndComments,
+    fetchArticle,
     setDeletedComment,
     removeComment,
     postComment,
     setNewComment,
     setNewArticleInfo,
-    publishArticle
+    setEditedArticle,
+    setDeletedArticle,
+    publishArticle,
+    removeArticle
   ]
 }

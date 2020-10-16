@@ -54,7 +54,7 @@ export default {
   },
 
   isEditorPage () {
-    return this.page === pages.EDITOR
+    return /editor/i.test(this.page)
   },
 
   isTagTab () {

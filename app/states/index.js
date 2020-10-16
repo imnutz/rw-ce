@@ -33,12 +33,16 @@ const [
 
 const [
   fetchArticleAndComments,
+  fetchArticle,
   setDeletedComment,
   removeComment,
   postComment,
   setNewComment,
   setNewArticleInfo,
-  publishArticle
+  setEditedArticle,
+  setDeletedArticle,
+  publishArticle,
+  removeArticle
 ] = samInstance.addComponent(articleDetail).intents
 
 const [
@@ -62,6 +66,7 @@ const intents = {
   favoriteArticle,
   setFavorite,
   fetchArticleAndComments,
+  fetchArticle,
   setFollow,
   followUser,
   setDeletedComment,
@@ -69,7 +74,10 @@ const intents = {
   postComment,
   setNewComment,
   setNewArticleInfo,
-  publishArticle
+  setEditedArticle,
+  setDeletedArticle,
+  publishArticle,
+  removeArticle
 }
 
 export default {

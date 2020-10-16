@@ -19,6 +19,10 @@ export default (intents) => {
     .on('/editor', () => {
       intents.setPage('editor')
     })
+    .on('/editor/:slug', (params) => {
+      const slug = params.slug
+      intents.setPage('editor', { editedSlug: slug })
+    })
     .on('/article/:slug', (params) => {
       const slug = params.slug
       intents.setPage('article', { slug })

@@ -65,13 +65,31 @@ define(componentName, {
 
   onsavearticle (evt) {
     const {
+      isEditing,
+      slug,
       title,
       description,
       body,
       tags: tagList
     } = evt.detail
 
-    this.intents.setNewArticleInfo(title, description, body, tagList)
+    if (isEditing) {
+      this.intents.setEditedArticle({
+        slug,
+        title,
+        description,
+        body,
+        tagList
+      })
+    } else {
+      this.intents.setNewArticleInfo(title, description, body, tagList)
+    }
+  },
+
+  ondeletearticle (evt) {
+    const slug = evt.detail.slug
+
+    this.intents.setDeletedArticle(slug)
   },
 
   _getPage () {
@@ -94,7 +112,7 @@ define(componentName, {
         />
       `
     } else if (page === pages.EDITOR) {
-      return html`<rw-editor .errors=${this.state.articleCreationErrors}/>`
+      return html`<rw-editor .errors=${this.state.articleCreationErrors} .article=${this.state.editedArticle}/>`
     }
 
     const homeState = this.state.home

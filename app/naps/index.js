@@ -90,11 +90,48 @@ export default (sam, router, intents) => {
     },
 
     model => _ => {
+      if (model.isArticlePage() && model.deletedSlug) {
+        const token = model.user ? model.user.token : null
+
+        intents.removeArticle(token, model.deletedSlug)
+        return true
+      }
+
+      return false
+    },
+
+    model => _ => {
       if (model.isEditorPage() && model.createArticle) {
         const token = model.user ? model.user.token : null
 
         if (token) {
           intents.publishArticle(token, model.newArticle)
+        }
+
+        return true
+      }
+
+      return false
+    },
+
+    model => _ => {
+      if (model.isEditorPage() && model.editedSlug) {
+        const token = model.user ? model.user.token : null
+
+        if (token) {
+          intents.fetchArticle(model.editedSlug, token)
+        }
+      }
+
+      return false
+    },
+
+    model => _ => {
+      if (model.isEditorPage() && model.editedArticleDetail) {
+        const token = model.user ? model.user.token : null
+
+        if (token) {
+          intents.publishArticle(token, model.editedArticleDetail, true)
         }
 
         return true

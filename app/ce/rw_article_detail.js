@@ -12,6 +12,7 @@ define(componentName, {
     '_followHandler',
     '_favoriteHandler',
     '_deleteComment',
+    '_deleteArticle',
     '_postCommentHandler'
   ],
   props: {
@@ -78,6 +79,19 @@ define(componentName, {
     }))
   },
 
+  _deleteArticle (evt) {
+    evt.preventDefault()
+
+    if (this.article) {
+      this.dispatchEvent(new CustomEvent('deletearticle', {
+        bubbles: true,
+        detail: {
+          slug: this.article.slug
+        }
+      }))
+    }
+  },
+
   _getFollowButton () {
     const following = this.article.author.following
 
@@ -120,6 +134,26 @@ define(componentName, {
         Favorite Post <span class="counter">(${this.article.favoritesCount})</span>
       </button>
     `
+  },
+
+  _getAuthorButton () {
+    return html`
+      <a class="btn btn-sm btn-outline-secondary" href="${'#/editor/' + this.article.slug}">
+        <i class="ion-edit"></i>
+        &nbsp;
+        Edit Article
+      </a>
+
+      <button class="btn btn-sm btn-outline-danger" onclick=${this._deleteArticle}>
+        <i class="ion-trash-a"></i>
+        &nbsp;
+        Delete Article
+      </button>
+    `
+  },
+
+  _isAuthor () {
+    return this.currentUser && this.currentUser.username === this.article.author.username
   },
 
   _getComments () {
@@ -191,6 +225,18 @@ define(componentName, {
     `
   },
 
+  _getButtons () {
+    if (this._isAuthor()) {
+      return this._getAuthorButton()
+    }
+
+    return html`
+      ${this._getFollowButton()}
+      &nbsp;&nbsp;
+      ${this._getFavoriteButton()}
+    `
+  },
+
   render () {
     if (!this.article) return html`loading...`
 
@@ -209,9 +255,7 @@ define(componentName, {
                 <a href="" class="author">${this.article.author.username}</a>
                 <span class="date">${timestamp.format('MMMM DD, YYYY')}</span>
               </div>
-              ${this._getFollowButton()}
-              &nbsp;&nbsp;
-              ${this._getFavoriteButton()}
+              ${this._getButtons()}
             </div>
 
           </div>
@@ -233,9 +277,8 @@ define(componentName, {
                 <a href="" class="author">${this.article.author.username}</a>
                 <span class="date">${timestamp.format('MMMM DD, YYYY')}</span>
               </div>
-              ${this._getFollowButton()}
-              &nbsp;
-              ${this._getFavoriteButton()}
+
+              ${this._getButtons()}
             </div>
           </div>
 

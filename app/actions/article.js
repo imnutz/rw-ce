@@ -7,7 +7,9 @@ import {
   getComments,
   deleteComment,
   saveComment,
-  createArticle
+  createArticle,
+  updateArticle,
+  deleteArticle
 } from '../api'
 
 export const fetchArticles = (...params) => {
@@ -75,6 +77,32 @@ export const setNewArticleInfo = (title, description, body, tags) => {
   }
 }
 
-export const publishArticle = (token, article) => {
+export const setEditedArticle = (editedArticleDetail) => ({ editedArticleDetail })
+export const setDeletedArticle = (deletedSlug) => ({ deletedSlug })
+
+export const publishArticle = (token, article, isEdit) => {
+  if (isEdit) {
+    var data = {}
+
+    if (article.title) {
+      data.title = article.title
+    }
+    if (article.description) {
+      data.description = article.description
+    }
+    if (article.body) {
+      data.body = article.body
+    }
+    if (article.tagList) {
+      data.tagList = article.tagList
+    }
+
+    return updateArticle(token, article.slug, data).then(data => ({ updatedArticle: data.article, errors: data.errors }))
+  }
+
   return createArticle(token, article).then(data => ({ createdArticle: data.article, errors: data.errors }))
+}
+
+export const removeArticle = (token, slug) => {
+  return deleteArticle(token, slug).then(data => ({ articleDeleted: true }))
 }

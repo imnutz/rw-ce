@@ -190,3 +190,29 @@ export const createArticle = (token, article) => {
     body: JSON.stringify(data)
   }).then(response => response.json())
 }
+
+export const updateArticle = (token, slug, article) => {
+  const endpoint = getEndpoint(`/articles/${slug}`)
+  const data = { article }
+
+  return fetch(endpoint, {
+    method: 'PUT',
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    },
+    body: JSON.stringify(data)
+  }).then(response => response.json())
+}
+
+export const deleteArticle = (token, slug) => {
+  const endpoint = getEndpoint(`/articles/${slug}`)
+
+  return fetch(endpoint, {
+    method: 'DELETE',
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    }
+  }).then(response => response.json())
+}

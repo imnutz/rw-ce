@@ -5,7 +5,8 @@ const componentName = 'rw-editor'
 define(componentName, {
   bound: ['render', '_submit', '_getErrorMessage'],
   props: {
-    errors: {}
+    errors: {},
+    article: undefined
   },
   init () {
     this.titleRef = {}
@@ -19,6 +20,9 @@ define(componentName, {
   _submit (evt) {
     evt.preventDefault()
 
+    const isEditing = Boolean(this.article)
+    const slug = isEditing ? this.article.slug : ''
+
     const title = this.titleRef.current.value
     const description = this.descRef.current.value
     const body = this.bodyRef.current.value
@@ -27,6 +31,8 @@ define(componentName, {
     this.dispatchEvent(new CustomEvent('savearticle', {
       bubbles: true,
       detail: {
+        isEditing,
+        slug,
         title,
         description,
         body,
@@ -34,6 +40,7 @@ define(componentName, {
       }
     }))
   },
+
   _getErrorMessage (error = {}) {
     const errorMessages = Object.keys(error).reduce((errors, key) => {
       errors.push([key, error[key]].join(' '))
@@ -51,6 +58,13 @@ define(componentName, {
     ` : ''
   },
   render () {
+    const {
+      title = '',
+      description = '',
+      body = '',
+      tagList = []
+    } = this.article || {}
+
     return this.html`
       <div class="editor-page">
         <div class="container page">
@@ -60,16 +74,16 @@ define(componentName, {
               <form>
                 <fieldset>
                   <fieldset class="form-group">
-                      <input type="text" class="form-control form-control-lg" placeholder="Article Title" ref=${this.titleRef}>
+                      <input type="text" class="form-control form-control-lg" placeholder="Article Title" ref=${this.titleRef} value=${title}>
                   </fieldset>
                   <fieldset class="form-group">
-                      <input type="text" class="form-control" placeholder="What's this article about?" ref=${this.descRef}>
+                      <input type="text" class="form-control" placeholder="What's this article about?" ref=${this.descRef} value=${description}>
                   </fieldset>
                   <fieldset class="form-group">
-                      <textarea class="form-control" rows="8" placeholder="Write your article (in markdown)" ref=${this.bodyRef}></textarea>
+                      <textarea class="form-control" rows="8" placeholder="Write your article (in markdown)" ref=${this.bodyRef}>${body}</textarea>
                   </fieldset>
                   <fieldset class="form-group">
-                      <input type="text" class="form-control" placeholder="Enter tags" ref=${this.tagsRef}/>
+                      <input type="text" class="form-control" placeholder="Enter tags" ref=${this.tagsRef} value=${tagList.join(',')}/>
                   </fieldset>
                   <button class="btn btn-lg pull-xs-right btn-primary" type="button" onclick=${this._submit}>
                       Publish Article
