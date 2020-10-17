@@ -216,3 +216,18 @@ export const deleteArticle = (token, slug) => {
     }
   }).then(response => response.json())
 }
+
+export const getUser = async (token) => {
+  const endpoint = getEndpoint('/user')
+
+  const response =  await fetch(endpoint, {
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    }
+  })
+
+  const data = await response.json()
+
+  return data
+}

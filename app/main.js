@@ -92,6 +92,10 @@ define(componentName, {
     this.intents.setDeletedArticle(slug)
   },
 
+  onlogout (evt) {
+    this.intents.logout()
+  },
+
   _getPage () {
     const page = this.state.page
     if (page === pages.SIGNIN) {
@@ -113,6 +117,8 @@ define(componentName, {
       `
     } else if (page === pages.EDITOR) {
       return html`<rw-editor .errors=${this.state.articleCreationErrors} .article=${this.state.editedArticle}/>`
+    } else if (page === pages.SETTINGS) {
+      return html`<rw-settings .user=${this.state.settingsUser} />`
     }
 
     const homeState = this.state.home

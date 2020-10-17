@@ -3,13 +3,16 @@ import {
   signin,
   signup,
   setFollow,
-  followUser
+  followUser,
+  fetchUser,
+  logout
 } from '../actions/user'
 
 import {
   STORAGE_USER_KEY,
   pages,
-  PERSONAL_FEED_ID
+  PERSONAL_FEED_ID,
+  GLOBAL_FEED_ID
 } from '../constants'
 
 export default {
@@ -76,6 +79,24 @@ export default {
       }
 
       return model
+    },
+
+    model => ({ currentUser }) => {
+      if (model.isSettingsPage() && currentUser) {
+        model.settingsUser = currentUser
+      }
+    },
+
+    model => ({ isSignedOut }) => {
+      if (isSignedOut) {
+        model.user = undefined
+        model.isAuthenticated = false
+        model.home.currentTab = PERSONAL_FEED_ID
+        model.home.currentPage = 1
+
+        storage.removeItem(STORAGE_USER_KEY)
+        model.redirectPage = pages.HOME
+      }
     }
   ],
 
@@ -83,6 +104,8 @@ export default {
     signin,
     signup,
     setFollow,
-    followUser
+    followUser,
+    fetchUser,
+    logout
   ]
 }

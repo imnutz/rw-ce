@@ -45,7 +45,7 @@ export default (sam, router, intents) => {
 
     model => _ => {
       if (model.isArticlePage() && model.fetchingArticleDetail) {
-        const token = model.user ? model.user.token : null
+        const token = model.getAuthenticatedToken()
         intents.fetchArticleAndComments(model.articleSlug, token)
 
         return true
@@ -56,7 +56,7 @@ export default (sam, router, intents) => {
 
     model => _ => {
       if (model.isArticlePage() && model.followUser) {
-        const token = model.user ? model.user.token : null
+        const token = model.getAuthenticatedToken()
 
         intents.followUser(token, model.followUser, model.following)
         return true
@@ -67,7 +67,7 @@ export default (sam, router, intents) => {
 
     model => _ => {
       if (model.isArticlePage() && model.deletedCommentId) {
-        const token = model.user ? model.user.token : null
+        const token = model.getAuthenticatedToken()
         intents.removeComment(token, model.articleDetail.slug, model.deletedCommentId)
         return true
       }
@@ -77,7 +77,7 @@ export default (sam, router, intents) => {
 
     model => _ => {
       if (model.isArticlePage() && model.newComment) {
-        const token = model.user ? model.user.token : null
+        const token = model.getAuthenticatedToken()
         intents.postComment(token, model.articleDetail.slug, model.newComment)
 
         // reset input field value
@@ -91,7 +91,7 @@ export default (sam, router, intents) => {
 
     model => _ => {
       if (model.isArticlePage() && model.deletedSlug) {
-        const token = model.user ? model.user.token : null
+        const token = model.getAuthenticatedToken()
 
         intents.removeArticle(token, model.deletedSlug)
         return true
@@ -102,7 +102,7 @@ export default (sam, router, intents) => {
 
     model => _ => {
       if (model.isEditorPage() && model.createArticle) {
-        const token = model.user ? model.user.token : null
+        const token = model.getAuthenticatedToken()
 
         if (token) {
           intents.publishArticle(token, model.newArticle)
@@ -116,7 +116,7 @@ export default (sam, router, intents) => {
 
     model => _ => {
       if (model.isEditorPage() && model.editedSlug) {
-        const token = model.user ? model.user.token : null
+        const token = model.getAuthenticatedToken()
 
         if (token) {
           intents.fetchArticle(model.editedSlug, token)
@@ -128,12 +128,23 @@ export default (sam, router, intents) => {
 
     model => _ => {
       if (model.isEditorPage() && model.editedArticleDetail) {
-        const token = model.user ? model.user.token : null
+        const token = model.getAuthenticatedToken()
 
         if (token) {
           intents.publishArticle(token, model.editedArticleDetail, true)
         }
 
+        return true
+      }
+
+      return false
+    },
+
+    model => _ => {
+      if (model.isSettingsPage() && !model.settingsUser) {
+        const token = model.getAuthenticatedToken()
+
+        intents.fetchUser(token)
         return true
       }
 

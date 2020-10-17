@@ -49,7 +49,9 @@ const [
   signin,
   signup,
   setFollow,
-  followUser
+  followUser,
+  fetchUser,
+  logout
 ] = samInstance.addComponent(user).intents
 
 const intents = {
@@ -77,7 +79,9 @@ const intents = {
   setEditedArticle,
   setDeletedArticle,
   publishArticle,
-  removeArticle
+  removeArticle,
+  fetchUser,
+  logout
 }
 
 export default {

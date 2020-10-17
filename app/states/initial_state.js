@@ -57,6 +57,10 @@ export default {
     return /editor/i.test(this.page)
   },
 
+  isSettingsPage () {
+    return this.page === pages.SETTINGS
+  },
+
   isTagTab () {
     return this.home.currentTab !== GLOBAL_FEED_ID && this.home.currentTab !== PERSONAL_FEED_ID
   },
@@ -68,6 +72,7 @@ export default {
   isPersonalTab () {
     return this.home.currentTab === PERSONAL_FEED_ID
   },
+
   excludeTagTab () {
     this.home.tabs = this.home.tabs.filter(t => {
       return t.id === GLOBAL_FEED_ID || t.id === PERSONAL_FEED_ID
@@ -78,5 +83,9 @@ export default {
     return this.home.articles.find(article => {
       return article.slug === slug
     })
+  },
+
+  getAuthenticatedToken () {
+    return (this.user && this.user.token) || null
   }
 }

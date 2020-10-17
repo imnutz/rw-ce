@@ -9,5 +9,6 @@ export const pages = {
   SIGNIN: 'signin',
   SIGNUP: 'signup',
   ARTICLE: 'article',
-  EDITOR: 'editor'
+  EDITOR: 'editor',
+  SETTINGS: 'settings'
 }
