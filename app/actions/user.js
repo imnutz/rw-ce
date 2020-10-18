@@ -1,4 +1,4 @@
-import { auth, register, follow, getUser } from '../api'
+import { auth, register, follow, getUser, updateUser } from '../api'
 
 export const signin = (email, password) => {
   return auth(email, password).then(data => ({ data }))
@@ -23,3 +23,10 @@ export const fetchUser = async (token) => {
 }
 
 export const logout = () => ({ isSignedOut: true })
+
+export const setUserSettings = (newSettings) => ({ newSettings })
+export const updateUserSettings = async (token, newSettings) => {
+  const userData = await updateUser(token, newSettings)
+
+  return { updatedUser: userData.user, settingErrors: userData.errors }
+}

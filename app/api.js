@@ -231,3 +231,19 @@ export const getUser = async (token) => {
 
   return data
 }
+
+export const updateUser = async (token, user) => {
+  const endpoint = getEndpoint('/user')
+  const data = { user }
+
+  const response = await fetch(endpoint, {
+    method: 'PUT',
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    },
+    body: JSON.stringify(data)
+  })
+
+  return await response.json()
+}

@@ -5,7 +5,9 @@ import {
   setFollow,
   followUser,
   fetchUser,
-  logout
+  logout,
+  setUserSettings,
+  updateUserSettings
 } from '../actions/user'
 
 import {
@@ -35,8 +37,6 @@ export default {
           storage.setItem(STORAGE_USER_KEY, user)
         }
       }
-
-      return model
     },
 
     model => ({ data = {} }) => {
@@ -67,8 +67,6 @@ export default {
           model.followUser = username
         }
       }
-
-      return model
     },
 
     model => ({ followedProfile }) => {
@@ -77,8 +75,6 @@ export default {
 
         model.articleDetail.author.following = followedProfile.following
       }
-
-      return model
     },
 
     model => ({ currentUser }) => {
@@ -97,6 +93,22 @@ export default {
         storage.removeItem(STORAGE_USER_KEY)
         model.redirectPage = pages.HOME
       }
+    },
+
+    model => ({ newSettings }) => {
+      if (newSettings) {
+        model.newSettings = newSettings
+      }
+    },
+
+    model => ({ updatedUser, settingErrors }) => {
+      if (settingErrors) {
+        model.updateSettingErrors = settingErrors
+        model.newSettings = undefined
+      } else if (updatedUser) {
+        model.newSettings = undefined
+        model.redirectPage = pages.HOME
+      }
     }
   ],
 
@@ -106,6 +118,8 @@ export default {
     setFollow,
     followUser,
     fetchUser,
-    logout
+    logout,
+    setUserSettings,
+    updateUserSettings
   ]
 }

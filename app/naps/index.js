@@ -149,6 +149,17 @@ export default (sam, router, intents) => {
       }
 
       return false
+    },
+
+    model => _ => {
+      if (model.isSettingsPage() && model.newSettings) {
+        const token = model.getAuthenticatedToken()
+
+        intents.updateUserSettings(token, model.newSettings)
+        return true
+      }
+
+      return false
     }
   ])
 }

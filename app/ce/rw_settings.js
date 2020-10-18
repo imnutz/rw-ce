@@ -1,12 +1,13 @@
-import { define } from 'uce'
+import { define, html } from 'uce'
 
 const componentName = 'rw-settings'
 
 define(componentName, {
-  bound: ['render', '_submit', '_logout'],
+  bound: ['render', '_submit', '_logout', '_getErrorMessage'],
 
   props: {
-    user: undefined
+    user: undefined,
+    errors: undefined
   },
 
   init () {
@@ -46,6 +47,23 @@ define(componentName, {
     this.dispatchEvent(new CustomEvent('logout', { bubbles: true }))
   },
 
+  _getErrorMessage (error = {}) {
+    const errorMessages = Object.keys(error).reduce((errors, key) => {
+      errors.push([key, error[key]].join(' '))
+      return errors
+    }, [])
+
+    return errorMessages && errorMessages.length ? html`
+      <ul class="error-messages">
+        ${
+          errorMessages.map(msg => {
+            return html`<li>${msg}</li>`
+          })
+        }
+      </ul>
+    ` : ''
+  },
+
   render () {
     const {
       image = '',
@@ -61,7 +79,8 @@ define(componentName, {
 
             <div class="col-md-6 offset-md-3 col-xs-12">
               <h1 class="text-xs-center">Your Settings</h1>
-
+              
+              ${this._getErrorMessage(this.errors)}
               <form>
                 <fieldset>
                     <fieldset class="form-group">

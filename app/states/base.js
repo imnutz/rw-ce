@@ -54,9 +54,7 @@ export default {
         } else {
           model.header = [home, signin, signup]
 
-          //if (isEmptyArray(model.home.tabs)) {
           model.home.tabs = [globalFeed]
-          //}
         }
       }
 

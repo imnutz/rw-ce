@@ -92,8 +92,26 @@ define(componentName, {
     this.intents.setDeletedArticle(slug)
   },
 
-  onlogout (evt) {
+  onlogout () {
     this.intents.logout()
+  },
+
+  onsavesettings (evt) {
+    const {
+      imageUrl: image,
+      username,
+      bio,
+      email,
+      password
+    } = evt.detail
+
+    var newSettings = { image, username, email, bio }
+
+    if (password) {
+      newSettings['password'] = password
+    }
+
+    this.intents.setUserSettings(newSettings)
   },
 
   _getPage () {
@@ -118,7 +136,7 @@ define(componentName, {
     } else if (page === pages.EDITOR) {
       return html`<rw-editor .errors=${this.state.articleCreationErrors} .article=${this.state.editedArticle}/>`
     } else if (page === pages.SETTINGS) {
-      return html`<rw-settings .user=${this.state.settingsUser} />`
+      return html`<rw-settings .user=${this.state.settingsUser} .errors=${this.state.updateSettingErrors} />`
     }
 
     const homeState = this.state.home
