@@ -91,7 +91,7 @@ export default {
       if (isSignedOut) {
         model.user = undefined
         model.isAuthenticated = false
-        model.home.currentTab = PERSONAL_FEED_ID
+        model.home.currentTab = GLOBAL_FEED_ID
         model.home.currentPage = 1
 
         storage.removeItem(STORAGE_USER_KEY)

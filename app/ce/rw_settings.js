@@ -43,7 +43,7 @@ define(componentName, {
   _logout (evt) {
     evt.preventDefault()
 
-    this.dispatchEvent(new CustomEvent('logout', { bubbles:true }))
+    this.dispatchEvent(new CustomEvent('logout', { bubbles: true }))
   },
 
   render () {

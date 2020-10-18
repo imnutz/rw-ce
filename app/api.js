@@ -220,7 +220,7 @@ export const deleteArticle = (token, slug) => {
 export const getUser = async (token) => {
   const endpoint = getEndpoint('/user')
 
-  const response =  await fetch(endpoint, {
+  const response = await fetch(endpoint, {
     headers: {
       ...header,
       ...getAuthHeader(token)
