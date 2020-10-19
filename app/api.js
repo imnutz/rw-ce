@@ -50,6 +50,35 @@ export const getArticles = (offset = 0, limit = 10, tag = '') => {
   }).then(response => response.json())
 }
 
+export const getProfileArticles = (config) => {
+  const {
+    token,
+    offset = 0,
+    limit = 10,
+    author,
+    favorited
+  } = config
+
+  var params = [
+    `offset=${offset}`,
+    `limit=${limit}`
+  ]
+
+  if (author) {
+    params.push(`author=${author}`)
+  }
+
+  if (favorited) {
+    params.push(`favorited=${favorited}`)
+  }
+
+  const endpoint = getEndpoint(`/articles?${params.join('&')}`)
+
+  return fetch(endpoint, {
+    headers: { ...header, ...getAuthHeader(token) }
+  }).then(response => response.json())
+}
+
 export const getArticle = (slug, token) => {
   const endpoint = getEndpoint(`/articles/${slug}`)
 
@@ -243,6 +272,19 @@ export const updateUser = async (token, user) => {
       ...getAuthHeader(token)
     },
     body: JSON.stringify(data)
+  })
+
+  return await response.json()
+}
+
+export const getProfile = async (token, username) => {
+  const endpoint = getEndpoint(`/profiles/${username}`)
+
+  const reponse = await fetch(endpoint, {
+    headers: {
+      ...header,
+      ...getAuthHeader(token)
+    }
   })
 
   return await response.json()

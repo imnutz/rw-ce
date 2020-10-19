@@ -77,6 +77,12 @@ export default {
       }
     },
 
+    model => ({ profileName }) => {
+      if (profileName) {
+        model.profileName = profileName
+      }
+    },
+
     model => ({ currentUser }) => {
       if (model.isSettingsPage() && currentUser) {
         model.settingsUser = currentUser

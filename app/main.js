@@ -108,7 +108,7 @@ define(componentName, {
     var newSettings = { image, username, email, bio }
 
     if (password) {
-      newSettings['password'] = password
+      newSettings.password = password
     }
 
     this.intents.setUserSettings(newSettings)
@@ -137,6 +137,8 @@ define(componentName, {
       return html`<rw-editor .errors=${this.state.articleCreationErrors} .article=${this.state.editedArticle}/>`
     } else if (page === pages.SETTINGS) {
       return html`<rw-settings .user=${this.state.settingsUser} .errors=${this.state.updateSettingErrors} />`
+    } else if (page === pages.PROFILE) {
+      return html`<rw-profile/>`
     }
 
     const homeState = this.state.home

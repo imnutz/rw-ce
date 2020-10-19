@@ -32,6 +32,10 @@ export default (intents) => {
     .on('/settings', () => {
       intents.setPage(pages.SETTINGS)
     })
+    .on('/@:username', (params) => {
+      const username = params.username
+      intents.setPage(pages.PROFILE, { profileName: username })
+    })
 
   return navigo
 }

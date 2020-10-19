@@ -10,5 +10,6 @@ export const pages = {
   SIGNUP: 'signup',
   ARTICLE: 'article',
   EDITOR: 'editor',
-  SETTINGS: 'settings'
+  SETTINGS: 'settings',
+  PROFILE: 'profile'
 }

@@ -61,6 +61,10 @@ export default {
     return this.page === pages.SETTINGS
   },
 
+  isProfilePage () {
+    return this.page === pages.PROFILE
+  },
+
   isTagTab () {
     return this.home.currentTab !== GLOBAL_FEED_ID && this.home.currentTab !== PERSONAL_FEED_ID
   },

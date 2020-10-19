@@ -38,7 +38,10 @@ export default {
         }
 
         if (model.isAuthenticated) {
-          model.header = [home, editor, settings]
+          model.header = [home, editor, settings, {
+            name: model.user.username,
+            path: `/@${model.user.username}`
+          }]
 
           if (isEmptyArray(model.home.tabs)) {
             model.home.tabs = [personalFeed, globalFeed]
