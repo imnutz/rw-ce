@@ -160,6 +160,17 @@ export default (sam, router, intents) => {
       }
 
       return false
+    },
+
+    model => _ => {
+      if (model.isProfilePage() && !model.profile) {
+        const token = model.getAuthenticatedToken()
+
+        intents.fetchProfileAndArticles(token, model.profileName)
+        return true
+      }
+
+      return false
     }
   ])
 }

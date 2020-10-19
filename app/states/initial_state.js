@@ -43,6 +43,19 @@ export default {
       }
     }
   },
+  profile: {
+    info: undefined,
+    tabs: {
+      article: {
+        name: 'My Article'
+      },
+      favorited: {
+        name: 'My Favorited',
+        path: 'favorites'
+      }
+    },
+    articles: undefined
+  },
   isAuthenticated: false,
 
   isHome () {

@@ -9,9 +9,7 @@ import {
   saveComment,
   createArticle,
   updateArticle,
-  deleteArticle,
-  getProfileArticles,
-  getProfile
+  deleteArticle
 } from '../api'
 
 export const fetchArticles = (...params) => {
@@ -107,22 +105,4 @@ export const publishArticle = (token, article, isEdit) => {
 
 export const removeArticle = (token, slug) => {
   return deleteArticle(token, slug).then(data => ({ articleDeleted: true }))
-}
-
-export const fetchProfileAndArticles = async (token, username) => {
-  var promises = [
-    getProfile(token, username),
-    getProfileArticles({
-      token,
-      author: username
-    })
-  ]
-
-  const [ profileData, articlesData ] = await Promise.all(promises)
-
-  return {
-    userProfile: profileData.profile,
-    profileArticles: articlesData.articles,
-    profileArticlesCount: articlesData.articlesCount
-  }
 }

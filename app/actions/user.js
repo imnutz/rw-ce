@@ -1,4 +1,12 @@
-import { auth, register, follow, getUser, updateUser } from '../api'
+import { 
+  auth, 
+  register, 
+  follow, 
+  getUser, 
+  updateUser,
+  getProfileArticles,
+  getProfile
+} from '../api'
 
 export const signin = (email, password) => {
   return auth(email, password).then(data => ({ data }))
@@ -29,4 +37,22 @@ export const updateUserSettings = async (token, newSettings) => {
   const userData = await updateUser(token, newSettings)
 
   return { updatedUser: userData.user, settingErrors: userData.errors }
+}
+
+export const fetchProfileAndArticles = async (token, username) => {
+  var promises = [
+    getProfile(token, username),
+    getProfileArticles({
+      token,
+      author: username
+    })
+  ]
+
+  const [profileData, articlesData] = await Promise.all(promises)
+
+  return {
+    userProfile: profileData.profile,
+    profileArticles: articlesData.articles,
+    profileArticlesCount: articlesData.articlesCount
+  }
 }

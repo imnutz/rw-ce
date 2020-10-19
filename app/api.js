@@ -280,7 +280,7 @@ export const updateUser = async (token, user) => {
 export const getProfile = async (token, username) => {
   const endpoint = getEndpoint(`/profiles/${username}`)
 
-  const reponse = await fetch(endpoint, {
+  const response = await fetch(endpoint, {
     headers: {
       ...header,
       ...getAuthHeader(token)

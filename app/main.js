@@ -138,7 +138,7 @@ define(componentName, {
     } else if (page === pages.SETTINGS) {
       return html`<rw-settings .user=${this.state.settingsUser} .errors=${this.state.updateSettingErrors} />`
     } else if (page === pages.PROFILE) {
-      return html`<rw-profile/>`
+      return html`<rw-profile .tabs=${this.state.profile.tabs} .articles=${this.state.profile.articles} .profile=${this.state.profile.info} />`
     }
 
     const homeState = this.state.home

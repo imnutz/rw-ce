@@ -7,7 +7,8 @@ import {
   fetchUser,
   logout,
   setUserSettings,
-  updateUserSettings
+  updateUserSettings,
+  fetchProfileAndArticles
 } from '../actions/user'
 
 import {
@@ -115,6 +116,14 @@ export default {
         model.newSettings = undefined
         model.redirectPage = pages.HOME
       }
+    },
+
+    model => ({ userProfile, profileArticles, profileArticlesCount }) => {
+      if (userProfile) {
+        model.profile = userProfile
+        model.profileArticles = profileArticles
+        model.profileArticlesCount = profileArticlesCount
+      }
     }
   ],
 
@@ -126,6 +135,7 @@ export default {
     fetchUser,
     logout,
     setUserSettings,
-    updateUserSettings
+    updateUserSettings,
+    fetchProfileAndArticles
   ]
 }

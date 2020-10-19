@@ -53,7 +53,8 @@ const [
   fetchUser,
   logout,
   setUserSettings,
-  updateUserSettings
+  updateUserSettings,
+  fetchProfileAndArticles
 ] = samInstance.addComponent(user).intents
 
 const intents = {
@@ -85,7 +86,8 @@ const intents = {
   fetchUser,
   logout,
   setUserSettings,
-  updateUserSettings
+  updateUserSettings,
+  fetchProfileAndArticles
 }
 
 export default {
