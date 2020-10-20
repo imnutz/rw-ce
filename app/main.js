@@ -126,8 +126,8 @@ define(componentName, {
       `
     } else if (page === pages.ARTICLE) {
       return html`
-        <rw-article-detail 
-          .article=${this.state.articleDetail} 
+        <rw-article-detail
+          .article=${this.state.articleDetail}
           .comments=${this.state.articleComments}
           .isAuthenticated=${this.state.isAuthenticated}
           .currentUser=${this.state.user}
@@ -138,7 +138,15 @@ define(componentName, {
     } else if (page === pages.SETTINGS) {
       return html`<rw-settings .user=${this.state.settingsUser} .errors=${this.state.updateSettingErrors} />`
     } else if (page === pages.PROFILE) {
-      return html`<rw-profile .tabs=${this.state.profile.tabs} .articles=${this.state.profile.articles} .profile=${this.state.profile.info} />`
+      return html`
+        <rw-profile
+          .tabs=${this.state.profile.tabs}
+          .articles=${this.state.profile.articles}
+          .profile=${this.state.profile.info}
+          .currentUser=${this.state.user} 
+          .articlesCount=${this.state.profile.articlesCount}
+        />
+      `
     }
 
     const homeState = this.state.home
@@ -150,8 +158,8 @@ define(componentName, {
     const currentTab = homeState ? homeState.currentTab : ''
 
     return html`
-      <rw-home 
-        .navItems=${this.state.header} 
+      <rw-home
+        .navItems=${this.state.header}
         .tabs=${tabs}
         .articles=${articles}
         .articlesCount=${articlesCount}

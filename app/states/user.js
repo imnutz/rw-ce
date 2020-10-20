@@ -120,9 +120,9 @@ export default {
 
     model => ({ userProfile, profileArticles, profileArticlesCount }) => {
       if (userProfile) {
-        model.profile = userProfile
-        model.profileArticles = profileArticles
-        model.profileArticlesCount = profileArticlesCount
+        model.profile.info = userProfile
+        model.profile.articles = profileArticles
+        model.profile.articlesCount = profileArticlesCount
       }
     }
   ],

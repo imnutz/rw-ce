@@ -163,7 +163,7 @@ export default (sam, router, intents) => {
     },
 
     model => _ => {
-      if (model.isProfilePage() && !model.profile) {
+      if (model.isProfilePage() && !model.profile.info) {
         const token = model.getAuthenticatedToken()
 
         intents.fetchProfileAndArticles(token, model.profileName)

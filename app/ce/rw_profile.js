@@ -1,9 +1,84 @@
-import { define } from 'uce'
+import { define, html } from 'uce'
 
 const componentName = 'rw-profile'
 
 define(componentName, {
+  bound: ['render', '_getEditSettingsButton', '_getFollowButton', '_isAuthor', '_getArticles'],
+
+  props: {
+    tabs: undefined,
+    articles: undefined,
+    profile: undefined,
+    currentUser: undefined,
+    articlesCount: 0
+  },
+
+  _isAuthor () {
+    return this.currentUser && this.currentUser.username === this.profile.username
+  },
+
+  _getTabs (tabs = []) {
+    return html`
+      <ul class="nav nav-pills outline-active">
+        ${
+          tabs.map(t => {
+            const clazz = ['nav-link']
+            if (t.id === this.currentTab) {
+              clazz.push('active')
+            }
+            return html`
+              <li class="nav-item">
+                <a class="${clazz.join(' ')}" href="#" data-tid="${t.id}">${t.name}</a>
+              </li>
+            `
+          })
+        }
+      </ul>
+    `
+  },
+
+  _getArticles (articles = []) {
+    return articles.map(article => {
+      return html`
+        <rw-article-summary .article=${article} />
+      `
+    })
+  },
+
+  _getEditSettingsButton () {
+    return html`
+      <a class="btn btn-sm btn-outline-secondary action-btn" href="#/settings">
+        <i class="ion-plus-round"></i>
+        &nbsp;
+        Edit settings
+      </a>
+    `
+  },
+
+  _getFollowButton () {
+    const following = this.profile.following
+
+    if (following) {
+      return html`
+        <button class="btn btn-sm btn-outline-secondary">
+          <i class="ion-plus-round"></i>
+          &nbsp;
+          Unfollow ${this.profile.username}</span>
+        </button>
+      `
+    }
+
+    return html`
+      <button class="btn btn-sm btn-outline-secondary">
+        <i class="ion-plus-round"></i>
+        &nbsp;
+        Follow ${this.profile.username}</span>
+      </button>
+    `
+  },
+
   render () {
+    if (!this.profile) return this.html`loading...`
     return this.html`
       <div class="profile-page">
 
@@ -12,16 +87,10 @@ define(componentName, {
             <div class="row">
 
               <div class="col-xs-12 col-md-10 offset-md-1">
-                <img src="http://i.imgur.com/Qr71crq.jpg" class="user-img" />
-                <h4>Eric Simons</h4>
-                <p>
-                  Cofounder @GoThinkster, lived in Aol's HQ for a few months, kinda looks like Peeta from the Hunger Games
-                </p>
-                <button class="btn btn-sm btn-outline-secondary action-btn">
-                  <i class="ion-plus-round"></i>
-                  &nbsp;
-                  Follow Eric Simons 
-                </button>
+                <img src=${this.profile.image} class="user-img" />
+                <h4>${this.profile.username}</h4>
+                <p>${this.profile.bio}</p>
+                ${ this._isAuthor() ? this._getEditSettingsButton() : this._getFollowButton() }
               </div>
 
             </div>
@@ -33,60 +102,17 @@ define(componentName, {
 
             <div class="col-xs-12 col-md-10 offset-md-1">
               <div clss="articles-toggle">
-                <ul class="nav nav-pills outline-active">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="">My Articles</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="">Favorited Articles</a>
-                  </li>
-                </ul>
+                ${this._getTabs(this.tabs)}
               </div>
 
-              <div class="article-preview">
-                <div class="article-meta">
-                  <a href=""><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
-                  <div class="info">
-                    <a href="" class="author">Eric Simons</a>
-                    <span class="date">January 20th</span>
-                  </div>
-                  <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                    <i class="ion-heart"></i> 29
-                  </button>
-                </div>
-                <a href="" class="preview-link">
-                  <h1>How to build webapps that scale</h1>
-                  <p>This is the description for the post.</p>
-                  <span>Read more...</span>
-                </a>
-              </div>
-
-              <div class="article-preview">
-                <div class="article-meta">
-                  <a href=""><img src="http://i.imgur.com/N4VcUeJ.jpg" /></a>
-                  <div class="info">
-                    <a href="" class="author">Albert Pai</a>
-                    <span class="date">January 20th</span>
-                  </div>
-                  <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                    <i class="ion-heart"></i> 32
-                  </button>
-                </div>
-                <a href="" class="preview-link">
-                  <h1>The song you won't ever stop singing. No matter how hard you try.</h1>
-                  <p>This is the description for the post.</p>
-                  <span>Read more...</span>
-                  <ul class="tag-list">
-                    <li class="tag-default tag-pill tag-outline">Music</li>
-                    <li class="tag-default tag-pill tag-outline">Song</li>
-                  </ul>
-                </a>
-              </div>
-
-
+              ${this._getArticles(this.articles)}
             </div>
 
+            <div class="col-xs-12 col-md-10 offset-md-1">
+              <rw-paginator .pageLimit=${10} .total=${this.articlesCount} .currentPage=${1}/>
+            </div>
           </div>
+
         </div>
 
       </div>

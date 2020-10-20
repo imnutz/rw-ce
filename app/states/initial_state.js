@@ -45,16 +45,19 @@ export default {
   },
   profile: {
     info: undefined,
-    tabs: {
-      article: {
-        name: 'My Article'
+    tabs: [
+      {
+        name: 'My Articles',
+        id: 'myarticles'
       },
-      favorited: {
+      {
         name: 'My Favorited',
-        path: 'favorites'
+        path: 'favorites',
+        id: 'myfavorited'
       }
-    },
-    articles: undefined
+    ],
+    articles: undefined,
+    articlesCount: 0
   },
   isAuthenticated: false,
 

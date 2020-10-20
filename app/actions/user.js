@@ -1,8 +1,8 @@
-import { 
-  auth, 
-  register, 
-  follow, 
-  getUser, 
+import {
+  auth,
+  register,
+  follow,
+  getUser,
   updateUser,
   getProfileArticles,
   getProfile
