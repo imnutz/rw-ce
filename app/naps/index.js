@@ -171,6 +171,37 @@ export default (sam, router, intents) => {
       }
 
       return false
+    },
+
+    model => _ => {
+      if (model.isProfilePage() && model.profile.pageChanged) {
+        const token = model.getAuthenticatedToken()
+        const page = model.profile.currentPage - 1
+        const offset = page * PAGE_LIMIT
+        var author = model.isProfileMyArticlesTab() ? model.profileName : ''
+        var favorited = model.isProfileMyFavoritedTab() ? model.profileName : ''
+
+        intents.fetchProfileArticles({
+          token,
+          offset,
+          author,
+          favorited
+        }) 
+      }
+    },
+
+    model => _ => {
+      if (model.isProfilePage() && (model.isProfileMyFavoritedTab() || model.isProfileMyArticlesTab()) && !model.profile.articles) {
+        const token = model.getAuthenticatedToken()
+        var favorited = model.isProfileMyFavoritedTab() ? model.profileName : ''
+        var author = model.isProfileMyArticlesTab() ? model.profileName : ''
+
+        intents.fetchProfileArticles({
+          token,
+          favorited,
+          author
+        }) 
+      }
     }
   ])
 }

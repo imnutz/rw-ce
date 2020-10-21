@@ -37,5 +37,10 @@ export default (intents) => {
       intents.setPage(pages.PROFILE, { profileName: username })
     })
 
+    .on('/@:username/favorites', (params) => {
+      const username = params.username
+      intents.setPage(pages.PROFILE, { profileName: username, favorites: true })
+    })
+
   return navigo
 }

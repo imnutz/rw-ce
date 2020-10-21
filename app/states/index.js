@@ -6,6 +6,7 @@ import base from './base'
 import user from './user'
 import home from './home'
 import articleDetail from './article_detail'
+import profile from './profile'
 
 const { api, createInstance } = sam
 
@@ -57,6 +58,10 @@ const [
   fetchProfileAndArticles
 ] = samInstance.addComponent(user).intents
 
+const [
+  fetchProfileArticles
+] = samInstance.addComponent(profile).intents
+
 const intents = {
   redirected,
   setPage,
@@ -87,7 +92,8 @@ const intents = {
   logout,
   setUserSettings,
   updateUserSettings,
-  fetchProfileAndArticles
+  fetchProfileAndArticles,
+  fetchProfileArticles
 }
 
 export default {

@@ -145,6 +145,8 @@ define(componentName, {
           .profile=${this.state.profile.info}
           .currentUser=${this.state.user} 
           .articlesCount=${this.state.profile.articlesCount}
+          .currentTab=${this.state.profile.currentTab}
+          .currentPage=${this.state.profile.currentPage}
         />
       `
     }

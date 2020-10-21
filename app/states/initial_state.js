@@ -1,4 +1,10 @@
-import { pages, GLOBAL_FEED_ID, PERSONAL_FEED_ID } from '../constants'
+import { 
+  pages, 
+  GLOBAL_FEED_ID, 
+  PERSONAL_FEED_ID,
+  PROFILE_MYARTICLE_TAB,
+  PROFILE_FAVORITED_TAB
+} from '../constants'
 export default {
   appName: 'Conduit',
   nav: {
@@ -52,12 +58,14 @@ export default {
       },
       {
         name: 'My Favorited',
-        path: 'favorites',
+        path: '/favorites',
         id: 'myfavorited'
       }
     ],
     articles: undefined,
-    articlesCount: 0
+    articlesCount: 0,
+    currentTab: 'myarticles',
+    currentPage: 1
   },
   isAuthenticated: false,
 
@@ -87,6 +95,14 @@ export default {
 
   isGlobalTab () {
     return this.home.currentTab === GLOBAL_FEED_ID
+  },
+
+  isProfileMyArticlesTab () {
+    return this.profile.currentTab === PROFILE_MYARTICLE_TAB
+  },
+
+  isProfileMyFavoritedTab () {
+    return this.profile.currentTab === PROFILE_FAVORITED_TAB
   },
 
   isPersonalTab () {

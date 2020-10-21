@@ -58,7 +58,7 @@ export default {
       return model
     },
     model => ({ pageNumber }) => {
-      if (pageNumber) {
+      if (pageNumber && model.isHome()) {
         if (model.home.currentPage !== pageNumber) {
           model.home.currentPage = pageNumber
           model.home.pageChanged = true

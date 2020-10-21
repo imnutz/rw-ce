@@ -10,7 +10,9 @@ define(componentName, {
     articles: undefined,
     profile: undefined,
     currentUser: undefined,
-    articlesCount: 0
+    articlesCount: 0,
+    currentTab: undefined,
+    currentPage: 1
   },
 
   _isAuthor () {
@@ -28,7 +30,7 @@ define(componentName, {
             }
             return html`
               <li class="nav-item">
-                <a class="${clazz.join(' ')}" href="#" data-tid="${t.id}">${t.name}</a>
+                <a class="${clazz.join(' ')}" href=${['#/@', this.profile.username, t.path].join('')} data-tid="${t.id}">${t.name}</a>
               </li>
             `
           })
@@ -109,7 +111,7 @@ define(componentName, {
             </div>
 
             <div class="col-xs-12 col-md-10 offset-md-1">
-              <rw-paginator .pageLimit=${10} .total=${this.articlesCount} .currentPage=${1}/>
+              <rw-paginator .pageLimit=${10} .total=${this.articlesCount} .currentPage=${this.currentPage}/>
             </div>
           </div>
 
