@@ -14,11 +14,7 @@ export default {
       file: path.resolve(__dirname, './dist/bundled.js'),
       format: 'es',
       name: 'Realworld',
-      sourcemap: true,
-      plugins: [
-        serve(),
-        livereload('dist')
-      ]
+      sourcemap: true
     },
     {
       file: path.resolve(__dirname, './dist/bundled.min.js'),

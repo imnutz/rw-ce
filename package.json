@@ -7,7 +7,8 @@
     "build": "standard && rollup -c --watch",
     "build-tape": "browserify ./tape.js --standalone tape -o dist/tape.js",
     "test": "karma start karma.config.js",
-    "sd-fix": "standard --fix"
+    "sd-fix": "standard --fix",
+    "build-scripts": "rollup -c"
   },
   "standard": {
     "globals": [
