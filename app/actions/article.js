@@ -12,58 +12,67 @@ import {
   deleteArticle
 } from '../api'
 
-export const fetchArticles = (...params) => {
-  return getArticles(...params)
-    .then(data => ({ articles: data }))
+export const fetchArticles = async (...params) => {
+  const data = await getArticles(...params)
+
+  return { articles: data }
 }
 
-export const fetchFeeds = (token, offset, limit) => {
-  return getFeeds(token, offset)
-    .then(data => ({ articles: data }))
+export const fetchFeeds = async (token, offset, limit) => {
+  const data = await getFeeds(token, offset)
+
+  return { articles: data }
 }
 
-export const fetchTags = () => {
-  return getTags().then(data => data)
+export const fetchTags = async () => {
+  return await getTags()
 }
 
-export const fetchArticle = (slug, token) => {
-  return getArticle(slug, token).then(data => ({ articleDetail: data.article }))
+export const fetchArticle = async (slug, token) => {
+  const data = await getArticle(slug, token)
+
+  return { articleDetail: data.article }
 }
 
-export const fetchComments = (slug, token) => {
-  return getComments(slug, token).then(data => ({ comments: data.comments }))
+export const fetchComments = async (slug, token) => {
+  const data = getComments(slug, token)
+
+  return { comments: data.comments }
 }
 
-export const favoriteArticle = (token, slug, isDelete) => {
-  return favorite(token, slug, isDelete).then(data => ({ favoritedArticle: data.article }))
+export const favoriteArticle = async (token, slug, isDelete) => {
+  const data = await favorite(token, slug, isDelete)
+  
+  return { favoritedArticle: data.article }
 }
 
-export const fetchArticleAndComments = (slug, token) => {
+export const fetchArticleAndComments = async (slug, token) => {
   const promises = [
     fetchArticle(slug, token),
     fetchComments(slug, token)
   ]
 
-  return Promise.all(promises).then(results => {
-    const [articleResult, commentResult] = results
-
-    return {
-      articleDetail: articleResult.articleDetail,
-      comments: commentResult.comments
-    }
-  })
+  const [articleResult, commentResult] = await Promise.all(promises)
+  return {
+    articleDetail: articleResult.articleDetail,
+    comments: commentResult.comments
+  }
 }
 
 export const setFavorite = (slug) => ({ favorite: true, slug })
 export const setDeletedComment = (commentId) => ({ deletedCommentId: commentId })
 export const setNewComment = (comment) => ({ newComment: comment })
 
-export const removeComment = (token, slug, commentId) => {
-  return deleteComment(token, slug, commentId).then(data => ({ commentDeleted: true }))
+export const removeComment = async (token, slug, commentId) => {
+  await deleteComment(token, slug, commentId)
+
+  return { commentDeleted: true }
 }
 
-export const postComment = (token, slug, comment) => {
-  return saveComment(token, slug, comment).then(data => ({ savedComment: data.comment }))
+export const postComment = async (token, slug, comment) => {
+  const data = await saveComment(token, slug, comment)
+
+  return { savedComment: data.comment }
 }
 
 export const setNewArticleInfo = (title, description, body, tags) => {
@@ -80,10 +89,10 @@ export const setNewArticleInfo = (title, description, body, tags) => {
 export const setEditedArticle = (editedArticleDetail) => ({ editedArticleDetail })
 export const setDeletedArticle = (deletedSlug) => ({ deletedSlug })
 
-export const publishArticle = (token, article, isEdit) => {
+export const publishArticle = async (token, article, isEdit) => {
+  var data = {}
+  var result
   if (isEdit) {
-    var data = {}
-
     if (article.title) {
       data.title = article.title
     }
@@ -97,12 +106,18 @@ export const publishArticle = (token, article, isEdit) => {
       data.tagList = article.tagList
     }
 
-    return updateArticle(token, article.slug, data).then(data => ({ updatedArticle: data.article, errors: data.errors }))
+    result = await updateArticle(token, article.slug, data)
+
+    return { updatedArticle: result.article, errors: result.errors }
   }
 
-  return createArticle(token, article).then(data => ({ createdArticle: data.article, errors: data.errors }))
+  result = await createArticle(token, article)
+
+  return { createdArticle: result.article, errors: result.errors }
 }
 
-export const removeArticle = (token, slug) => {
-  return deleteArticle(token, slug).then(data => ({ articleDeleted: true }))
+export const removeArticle = async (token, slug) => {
+  await deleteArticle(token, slug)
+
+  return { articleDeleted: true }
 }

@@ -8,18 +8,24 @@ import {
   getProfile
 } from '../api'
 
-export const signin = (email, password) => {
-  return auth(email, password).then(data => ({ data }))
+export const signin = async (email, password) => {
+  const data = await auth(email, password)
+
+  return { data }
 }
 
-export const signup = (username, email, password) => {
-  return register(username, email, password).then(data => ({ data }))
+export const signup = async (username, email, password) => {
+  const data = await register(username, email, password)
+
+  return { data }
 }
 
 export const setFollow = (username, following) => ({ username, following })
 
-export const followUser = (token, username, isDelete) => {
-  return follow(token, username, isDelete).then(data => ({ followedProfile: data.profile }))
+export const followUser = async (token, username, isDelete) => {
+  const data = await follow(token, username, isDelete)
+
+  return { followedProfile: data.profile }
 }
 
 export const fetchUser = async (token) => {

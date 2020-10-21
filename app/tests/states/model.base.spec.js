@@ -11,7 +11,9 @@ const { addInitialState, addComponent, setRender } = sam
 addInitialState(initialState)
 
 const [
+  /* eslint-disable */
   redirected,
+  /* eslint-enable */
   setPage
 ] = addComponent(base).intents
 
