@@ -14,26 +14,80 @@ const getEndpoint = (path) => {
   return [API_BASE, path].join('')
 }
 
-export const auth = (email, password) => {
-  const data = {
+const getHeaders = (token) => {
+  var headers = { ...header }
+
+  if (token) {
+    headers = { ...headers, ...getAuthHeader(token) }
+  }
+
+  return headers
+}
+
+// HTTP methods helper
+const get = async (endpoint, token) => {
+  const response = await fetch(endpoint, {
+    headers: getHeaders(token)
+  })
+
+  return await response.json()
+}
+
+const post = async (endpoint, token, data) => {
+  const options = {
+    method: 'POST',
+    headers: getHeaders(token)
+  }
+
+  if (data) {
+    options.body = JSON.stringify(data)
+  }
+
+  const response = await fetch(endpoint, options)
+
+  return await response.json()
+}
+
+const purge = async (endpoint, token) => {
+  const response = await fetch(endpoint, {
+    method: 'DELETE',
+    headers: getHeaders(token)
+  })
+
+  return await response.json()
+}
+
+const update = async (endpoint, token, data) => {
+  const options = {
+    method: 'PUT',
+    headers: getHeaders(token)
+  }
+
+  if (data) {
+    options.body = JSON.stringify(data)
+  }
+
+  const response = await fetch(endpoint, options)
+
+  return await response.json()
+}
+
+// APIs
+export const auth = async (email, password) => {
+  const userInfo = {
     user: { email, password }
   }
   const endpoint = getEndpoint('/users/login')
 
-  return fetch(endpoint, {
-    method: 'POST',
-    headers: { ...header },
-    body: JSON.stringify(data)
-  }).then(response => response.json())
-    .then(data => {
-      return {
-        authenticated: true,
-        authInfo: data
-      }
-    })
+  const data = await post(endpoint, null, userInfo)
+
+  return {
+    authenticated: true,
+    authInfo: data
+  }
 }
 
-export const getArticles = (offset = 0, limit = 10, tag = '') => {
+export const getArticles = async (offset = 0, limit = 10, tag = '') => {
   var params = [
     `offset=${offset}`,
     `limit=${limit}`
@@ -45,12 +99,10 @@ export const getArticles = (offset = 0, limit = 10, tag = '') => {
 
   const endpoint = getEndpoint(`/articles?${params.join('&')}`)
 
-  return fetch(endpoint, {
-    headers: { ...header }
-  }).then(response => response.json())
+  return get(endpoint)
 }
 
-export const getProfileArticles = (config) => {
+export const getProfileArticles = async (config) => {
   const {
     token,
     offset = 0,
@@ -74,121 +126,74 @@ export const getProfileArticles = (config) => {
 
   const endpoint = getEndpoint(`/articles?${params.join('&')}`)
 
-  return fetch(endpoint, {
-    headers: { ...header, ...getAuthHeader(token) }
-  }).then(response => response.json())
+  return await get(endpoint, token)
 }
 
-export const getArticle = (slug, token) => {
+export const getArticle = async (slug, token) => {
   const endpoint = getEndpoint(`/articles/${slug}`)
 
-  var headers
-  if (token) {
-    headers = {
-      ...header,
-      ...getAuthHeader(token)
-    }
-  } else {
-    headers = { ...header }
-  }
-
-  return fetch(endpoint, {
-    headers
-  }).then(response => response.json())
+  return get(endpoint, token)
 }
 
-export const getComments = (slug, token) => {
+export const getComments = async (slug, token) => {
   const endpoint = getEndpoint(`/articles/${slug}/comments`)
 
-  var headers
-  if (token) {
-    headers = {
-      ...header,
-      ...getAuthHeader(token)
-    }
-  } else {
-    headers = { ...header }
-  }
-
-  return fetch(endpoint, {
-    headers
-  }).then(response => response.json())
+  return await get(endpoint, token)
 }
 
-export const getFeeds = (token, offset = 0, limit = 10) => {
+export const getFeeds = async (token, offset = 0, limit = 10) => {
   const endpoint = getEndpoint(`/articles/feed?limit=${limit}&offset=${offset}`)
 
-  return fetch(endpoint, {
-    headers: { ...header, ...getAuthHeader(token) }
-  }).then(response => response.json())
+  return await get(endpoint, token)
 }
 
-export const getTags = () => {
+export const getTags = async () => {
   const endpoint = getEndpoint('/tags')
 
-  return fetch(endpoint, {
-    headers: { ...header }
-  }).then(response => response.json())
+  return await get(endpoint)
 }
 
-export const register = (username, email, password) => {
+export const register = async (username, email, password) => {
   const endpoint = getEndpoint('/users')
-  const data = {
+  const userInfo = {
     user: { username, email, password }
   }
 
-  return fetch(endpoint, {
-    method: 'POST',
-    headers: { ...header },
-    body: JSON.stringify(data)
-  }).then(response => response.json())
-    .then(data => {
-      return {
-        registered: true,
-        userInfo: data
-      }
-    })
+  const data = await post(endpoint, null, userInfo)
+
+  return {
+    registered: true,
+    userInfo: data
+  }
 }
 
-export const favorite = (token, slug, isDelete) => {
+export const favorite = async (token, slug, isDelete) => {
   const endpoint = getEndpoint(`/articles/${slug}/favorite`)
-  const method = isDelete ? 'DELETE' : 'POST'
 
-  return fetch(endpoint, {
-    method,
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    }
-  }).then(response => response.json())
+  if (isDelete) {
+    return await purge(endpoint, token)
+  }
+
+  return await post(endpoint, token)
 }
 
-export const follow = (token, username, isDelete) => {
+export const follow = async (token, username, isDelete) => {
   const endpoint = getEndpoint(`/profiles/${username}/follow`)
-  const method = isDelete ? 'DELETE' : 'POST'
 
-  return fetch(endpoint, {
-    method,
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    }
-  }).then(response => response.json())
+  if (isDelete) {
+    return await purge(endpoint, token)
+  }
+
+  return await post(endpoint, token)
 }
 
-export const deleteComment = (token, slug, commentId) => {
+export const deleteComment = async (token, slug, commentId) => {
   const endpoint = getEndpoint(`/articles/${slug}/comments/${commentId}`)
 
-  return fetch(endpoint, {
-    method: 'DELETE',
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    }
-  }).then(response => response.json())
+  return await purge(endpoint, token)
 }
 
-export const saveComment = (token, slug, comment) => {
+export const saveComment = async (token, slug, comment) => {
   const endpoint = getEndpoint(`/articles/${slug}/comments`)
   const data = {
     comment: {
@@ -196,96 +201,44 @@ export const saveComment = (token, slug, comment) => {
     }
   }
 
-  return fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    },
-    body: JSON.stringify(data)
-  }).then(response => response.json())
+  return await post(endpoint, token, data)
 }
 
-export const createArticle = (token, article) => {
+export const createArticle = async (token, article) => {
   const endpoint = getEndpoint('/articles')
   const data = { article }
 
-  return fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    },
-    body: JSON.stringify(data)
-  }).then(response => response.json())
+  return await post(endpoint, token, data)
 }
 
-export const updateArticle = (token, slug, article) => {
+export const updateArticle = async (token, slug, article) => {
   const endpoint = getEndpoint(`/articles/${slug}`)
   const data = { article }
 
-  return fetch(endpoint, {
-    method: 'PUT',
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    },
-    body: JSON.stringify(data)
-  }).then(response => response.json())
+  return await update(endpoint, token, data)
 }
 
-export const deleteArticle = (token, slug) => {
+export const deleteArticle = async (token, slug) => {
   const endpoint = getEndpoint(`/articles/${slug}`)
 
-  return fetch(endpoint, {
-    method: 'DELETE',
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    }
-  }).then(response => response.json())
+  return await purge(endpoint, token)
 }
 
 export const getUser = async (token) => {
   const endpoint = getEndpoint('/user')
 
-  const response = await fetch(endpoint, {
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    }
-  })
-
-  const data = await response.json()
-
-  return data
+  return await get(endpoint, token)
 }
 
 export const updateUser = async (token, user) => {
   const endpoint = getEndpoint('/user')
   const data = { user }
 
-  const response = await fetch(endpoint, {
-    method: 'PUT',
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    },
-    body: JSON.stringify(data)
-  })
-
-  return await response.json()
+  return await update(endpoint, token, data)
 }
 
 export const getProfile = async (token, username) => {
   const endpoint = getEndpoint(`/profiles/${username}`)
 
-  const response = await fetch(endpoint, {
-    headers: {
-      ...header,
-      ...getAuthHeader(token)
-    }
-  })
-
-  return await response.json()
+  return await get(endpoint, token)
 }

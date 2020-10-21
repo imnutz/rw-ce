@@ -72,9 +72,11 @@ export default {
     },
 
     model => ({ favoritedArticle }) => {
+      var i
+
       if (favoritedArticle && model.isHome()) {
         const length = model.home.articles.length
-        for (var i = 0; i < length; i++) {
+        for (i = 0; i < length; i++) {
           if (model.home.articles[i].slug === favoritedArticle.slug) {
             model.home.articles[i].favoritesCount = favoritedArticle.favoritesCount
             model.home.articles[i].favorited = favoritedArticle.favorited
@@ -91,7 +93,7 @@ export default {
         model.foundArticle = undefined
       } else if (favoritedArticle && model.isProfilePage()) {
         const length = model.profile.articles.length
-        for (var i = 0; i < length; i++) {
+        for (i = 0; i < length; i++) {
           if (model.profile.articles[i].slug === favoritedArticle.slug) {
             model.profile.articles[i].favoritesCount = favoritedArticle.favoritesCount
             model.profile.articles[i].favorited = favoritedArticle.favorited

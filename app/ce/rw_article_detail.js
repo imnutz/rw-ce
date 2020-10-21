@@ -221,9 +221,9 @@ define(componentName, {
             <h1>${this.article.title}</h1>
 
             <div class="article-meta">
-              <a href=""><img src=${this.article.author.image} /></a>
+              <a href=${'#/@' + this.article.author.username}><img src=${this.article.author.image} /></a>
               <div class="info">
-                <a href="" class="author">${this.article.author.username}</a>
+                <a href=${'#/@' + this.article.author.username} class="author">${this.article.author.username}</a>
                 <span class="date">${timestamp.format('MMMM DD, YYYY')}</span>
               </div>
               ${this._getButtons()}
