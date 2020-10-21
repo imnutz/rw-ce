@@ -46,8 +46,26 @@ export default {
         model.profile.currentPage = 1
         model.profile.articlesCount = 0
       }
+    },
+
+    model => ({ followedProfile }) => {
+      if (model.isProfilePage() && followedProfile) {
+        model.profile.info.following = followedProfile.following
+        model.followUser = undefined
+      }
+    },
+
+    model => ({ favorite, slug }) => {
+      if (model.isProfilePage() && favorite && slug) {
+        var foundArticle = model.findProfileArticle(slug)
+
+        if (foundArticle) {
+          model.favorite = favorite
+          model.foundArticle = foundArticle
+        }
+      }
     }
   ],
 
-  actions: [ fetchProfileArticles ]
+  actions: [fetchProfileArticles]
 }

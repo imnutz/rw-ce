@@ -9,7 +9,6 @@ define(componentName, {
     '_getFollowButton',
     '_getFavoriteButton',
     '_getCommentsForm',
-    '_followHandler',
     '_favoriteHandler',
     '_deleteComment',
     '_deleteArticle',
@@ -41,20 +40,6 @@ define(componentName, {
         }
       }))
     }
-  },
-
-  _followHandler (evt) {
-    evt.preventDefault()
-
-    const {
-      following,
-      username
-    } = this.article.author
-
-    this.dispatchEvent(new CustomEvent('follow', {
-      bubbles: true,
-      detail: { following, username }
-    }))
   },
 
   _favoriteHandler (evt) {
@@ -95,22 +80,8 @@ define(componentName, {
   _getFollowButton () {
     const following = this.article.author.following
 
-    if (following) {
-      return html`
-        <button class="btn btn-sm btn-outline-secondary" onclick=${this._followHandler}>
-          <i class="ion-plus-round"></i>
-          &nbsp;
-          Unfollow ${this.article.author.username}</span>
-        </button>
-      `
-    }
-
     return html`
-      <button class="btn btn-sm btn-outline-secondary" onclick=${this._followHandler}>
-        <i class="ion-plus-round"></i>
-        &nbsp;
-        Follow ${this.article.author.username}</span>
-      </button>
+      <rw-follow-toggler .username=${this.article.author.username} .following=${following} />
     `
   },
 

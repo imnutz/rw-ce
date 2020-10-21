@@ -1,6 +1,6 @@
-import { 
-  pages, 
-  GLOBAL_FEED_ID, 
+import {
+  pages,
+  GLOBAL_FEED_ID,
   PERSONAL_FEED_ID,
   PROFILE_MYARTICLE_TAB,
   PROFILE_FAVORITED_TAB
@@ -117,6 +117,12 @@ export default {
 
   findHomeArticle (slug) {
     return this.home.articles.find(article => {
+      return article.slug === slug
+    })
+  },
+
+  findProfileArticle (slug) {
+    return this.profile.articles.find(article => {
       return article.slug === slug
     })
   },

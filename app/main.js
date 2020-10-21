@@ -154,10 +154,14 @@ define(componentName, {
     const homeState = this.state.home
     const tabs = homeState ? homeState.tabs : []
     const articles = homeState ? homeState.articles : undefined
-    const articlesCount = homeState ? homeState.articlesCount : 1
+    var articlesCount = homeState ? homeState.articlesCount : 1
     const currentPage = homeState ? homeState.currentPage : 1
     const tags = homeState ? homeState.tags : []
     const currentTab = homeState ? homeState.currentTab : ''
+
+    if (articlesCount > 500) {
+      articlesCount = 500
+    }
 
     return html`
       <rw-home

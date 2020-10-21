@@ -71,7 +71,7 @@ export default {
     },
 
     model => ({ followedProfile }) => {
-      if (followedProfile) {
+      if (model.isArticlePage() && followedProfile) {
         model.followUser = undefined
 
         model.articleDetail.author.following = followedProfile.following

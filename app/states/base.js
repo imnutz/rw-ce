@@ -89,6 +89,17 @@ export default {
 
         model.favorite = false
         model.foundArticle = undefined
+      } else if (favoritedArticle && model.isProfilePage()) {
+        const length = model.profile.articles.length
+        for (var i = 0; i < length; i++) {
+          if (model.profile.articles[i].slug === favoritedArticle.slug) {
+            model.profile.articles[i].favoritesCount = favoritedArticle.favoritesCount
+            model.profile.articles[i].favorited = favoritedArticle.favorited
+          }
+        }
+
+        model.favorite = false
+        model.foundArticle = undefined
       }
 
       return model

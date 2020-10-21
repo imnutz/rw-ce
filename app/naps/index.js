@@ -55,7 +55,7 @@ export default (sam, router, intents) => {
     },
 
     model => _ => {
-      if (model.isArticlePage() && model.followUser) {
+      if ((model.isArticlePage() || model.isProfilePage()) && model.followUser) {
         const token = model.getAuthenticatedToken()
 
         intents.followUser(token, model.followUser, model.following)
@@ -186,7 +186,7 @@ export default (sam, router, intents) => {
           offset,
           author,
           favorited
-        }) 
+        })
       }
     },
 
@@ -200,7 +200,7 @@ export default (sam, router, intents) => {
           token,
           favorited,
           author
-        }) 
+        })
       }
     }
   ])

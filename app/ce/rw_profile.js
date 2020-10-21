@@ -60,22 +60,8 @@ define(componentName, {
   _getFollowButton () {
     const following = this.profile.following
 
-    if (following) {
-      return html`
-        <button class="btn btn-sm btn-outline-secondary">
-          <i class="ion-plus-round"></i>
-          &nbsp;
-          Unfollow ${this.profile.username}</span>
-        </button>
-      `
-    }
-
     return html`
-      <button class="btn btn-sm btn-outline-secondary">
-        <i class="ion-plus-round"></i>
-        &nbsp;
-        Follow ${this.profile.username}</span>
-      </button>
+      <rw-follow-toggler .username=${this.profile.username} .following=${following} />
     `
   },
 
@@ -92,7 +78,7 @@ define(componentName, {
                 <img src=${this.profile.image} class="user-img" />
                 <h4>${this.profile.username}</h4>
                 <p>${this.profile.bio}</p>
-                ${ this._isAuthor() ? this._getEditSettingsButton() : this._getFollowButton() }
+                ${this._isAuthor() ? this._getEditSettingsButton() : this._getFollowButton()}
               </div>
 
             </div>
