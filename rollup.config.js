@@ -7,6 +7,20 @@ import { terser } from 'rollup-plugin-terser'
 
 const path = require('path')
 
+var devPlugins = []
+var prodPlugins = []
+
+var mode = process.env.NODE_ENV || 'dev'
+
+if (mode === 'dev') {
+  devPlugins = [
+    serve(),
+    livereload('dist')
+  ]
+} else if (mode === 'prod') {
+  prodPlugins = [ terser() ]
+}
+
 export default {
   input: './app/index.js',
   output: [
@@ -14,13 +28,14 @@ export default {
       file: path.resolve(__dirname, './dist/bundled.js'),
       format: 'es',
       name: 'Realworld',
-      sourcemap: true
+      sourcemap: true,
+      plugins: devPlugins
     },
     {
       file: path.resolve(__dirname, './dist/bundled.min.js'),
       format: 'es',
       name: 'Realworld',
-      plugins: [terser()]
+      plugins: prodPlugins
     }
   ],
   plugins: [

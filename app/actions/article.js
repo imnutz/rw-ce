@@ -42,7 +42,7 @@ export const fetchComments = async (slug, token) => {
 
 export const favoriteArticle = async (token, slug, isDelete) => {
   const data = await favorite(token, slug, isDelete)
-  
+
   return { favoritedArticle: data.article }
 }
 

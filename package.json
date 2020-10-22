@@ -4,11 +4,11 @@
   "description": "Realword application with uce and sam-pattern",
   "license": "MIT",
   "scripts": {
-    "build": "standard && rollup -c --watch",
+    "build-dev": "NODE_ENV=dev rollup -c --watch ",
+    "build-prod": "NODE_ENV=prod rollup -c",
     "build-tape": "browserify ./tape.js --standalone tape -o dist/tape.js",
     "test": "karma start karma.config.js",
-    "sd-fix": "standard --fix",
-    "build-scripts": "rollup -c"
+    "sd-fix": "standard --fix"
   },
   "standard": {
     "globals": [
