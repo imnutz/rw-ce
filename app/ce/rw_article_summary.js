@@ -41,6 +41,7 @@ define(componentName, {
           <h1>${this.article.title}</h1>
           <p>${this.article.description}</p>
           <span>Read more...</span>
+          <rw-tags .tags=${this.article.tagList}/>
         </a>
       </div>
     `

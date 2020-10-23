@@ -1,4 +1,4 @@
-import { pages, PERSONAL_FEED_ID } from '../constants'
+import { pages, PERSONAL_FEED_ID, GLOBAL_FEED_ID } from '../constants'
 import { isEmptyArray } from '../utils'
 import {
   redirected,
@@ -58,6 +58,7 @@ export default {
           model.header = [home, signin, signup]
 
           model.home.tabs = [globalFeed]
+          model.home.currentTab = GLOBAL_FEED_ID
         }
       }
 

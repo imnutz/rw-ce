@@ -6,7 +6,7 @@ define(componentName, {
   bound: ['render', '_getTags', '_tagSelectionHandler'],
   props: {
     tags: undefined,
-    title: 'Popular Tags'
+    title: ''
   },
 
   _tagSelectionHandler (evt) {

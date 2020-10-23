@@ -92,7 +92,7 @@ define(componentName, {
 
             <div class="col-md-3">
               <div class="sidebar">
-                <rw-tags .tags=${this.tags} .title=${'Tags Tags Tags'}/>
+                <rw-tags .tags=${this.tags} .title=${'Popular tags'}/>
               </div>
             </div>
           </div>
