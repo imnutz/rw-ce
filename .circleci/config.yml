@@ -22,10 +22,10 @@ workflows:
 jobs:
   build-and-test:
     docker:
-      - image: 'cimg/node:15.1-browser'
+      - image: 'cimg/node:13.12-browser'
     executor:
       name: node/default
-      tag: '15.1'
+      tag: '13.12'
     steps:
       - browser-tools/install-chrome
       - checkout
