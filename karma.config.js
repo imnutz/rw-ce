@@ -3,7 +3,7 @@ var commonjs = require('@rollup/plugin-commonjs')
 var { nodeResolve } = require('@rollup/plugin-node-resolve')
 var tapSpec = require('tap-spec')
 
-process.env.CHROME_BIN = /usr/bin/google-chrome //require('puppeteer').executablePath()
+process.env.CHROME_BIN = '/usr/bin/google-chrome' //require('puppeteer').executablePath()
 
 module.exports = function (config) {
   config.set({
