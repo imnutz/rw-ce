@@ -13,6 +13,10 @@ commands:
     description: "Running tests"
     steps:
       - run: npm run test
+  chrome-version:
+    description: "Show Chrome's version"
+    steps:
+      - run: google-chrome --version
 
 workflows:
   test:
@@ -26,9 +30,7 @@ jobs:
       - image: 'cimg/node:13.12-browser'
     steps:
       - browser-tools/install-chrome
-      - run:
-        command: |
-          google-chrome --version
+      - chrome-version
 
   build-and-test:
     executor:
