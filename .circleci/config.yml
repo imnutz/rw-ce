@@ -1,0 +1,19 @@
+version: 2.1
+workflows:
+  test:
+    jobs:
+      - build-and-test
+jobs:
+  build-and-test:
+    docker: 
+      - image: cimg/node:15.1
+    steps:
+      - checkout
+      - node/install-packags
+      - run:
+        name: Build tape
+        command: npm build-tape
+      - run:
+        name: Test
+        command: npm test
+
