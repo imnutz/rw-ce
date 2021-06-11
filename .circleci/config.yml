@@ -22,7 +22,8 @@ workflows:
 
 jobs:
   install-chrome:
-    executor: browser-tools/default
+    docker:
+      - image: 'cimg/node:13.12-browser'
     steps:
       - browser-tools/install-chrome
       - run:
