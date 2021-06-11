@@ -26,6 +26,13 @@ module.exports = function (config) {
     colors: true,
     singleRun: true,
 
+    customLaunchers: {
+      ChromeHeadless: {
+        base: 'Chrome',
+        flags: ['--headless']
+      }
+    },
+
     rollupPreprocessor: {
       external: ['tape'],
       plugins: [
