@@ -20,11 +20,12 @@ workflows:
 
 jobs:
   build-and-test:
-    docker: 
-      - image: cimg/node:15.1
+    executor:
+      name: node/default
+      tag: '15.1'
     steps:
       - checkout
-      - node/install-packags
+      - node/install-packages
       - build-tape
       - test
 
