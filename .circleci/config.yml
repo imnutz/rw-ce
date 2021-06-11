@@ -28,9 +28,9 @@ jobs:
   install-chrome:
     docker:
       - image: 'cimg/node:13.12-browser'
-      - auth:
-        username: imnutz
-        password: $DOCKER_PWD
+        auth:
+          username: imnutz
+          password: $DOCKER_PWD
     steps:
       - browser-tools/install-chrome
       - chrome-version
