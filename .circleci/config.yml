@@ -24,21 +24,18 @@ workflows:
       - build-and-test
 
 jobs:
-  install-chrome:
+  build-and-test:
     docker:
       - image: 'cimg/node:15.14.0-browsers'
         auth:
           username: imnutz
           password: $DOCKER_PWD
-    steps:
-      - browser-tools/install-chrome
-      - chrome-version
-
-  build-and-test:
     executor:
       name: node/default
       tag: '15.14.0'
     steps:
+      - browser-tools/install-chrome
+      - chrome-version
       - checkout
       - node/install-packages:
           override-ci-command: npm install

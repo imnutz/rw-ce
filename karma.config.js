@@ -3,7 +3,7 @@ var commonjs = require('@rollup/plugin-commonjs')
 var { nodeResolve } = require('@rollup/plugin-node-resolve')
 var tapSpec = require('tap-spec')
 
-process.env.CHROME_BIN = require('puppeteer').executablePath()
+process.env.CHROME_BIN = /usr/bin/google-chrome //require('puppeteer').executablePath()
 
 module.exports = function (config) {
   config.set({
@@ -23,17 +23,10 @@ module.exports = function (config) {
     },
 
     reporters: ['tap-pretty'],
-    browsers: ['ChromeHeadlessCI'],
+    browsers: ['ChromeHeadless'],
     frameworks: ['tap'],
     colors: true,
     singleRun: true,
-    customLaunchers: {
-      ChromeHeadlessCI: {
-        base:'ChromeHeadless',
-        flags: ['--headless']
-      }
-    },
-
     rollupPreprocessor: {
       external: ['tape'],
       plugins: [
