@@ -23,10 +23,16 @@ module.exports = function (config) {
     },
 
     reporters: ['tap-pretty'],
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadlessCI'],
     frameworks: ['tap'],
     colors: true,
     singleRun: true,
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base:'ChromeHeadless',
+        flags: ['--headless']
+      }
+    },
 
     rollupPreprocessor: {
       external: ['tape'],
