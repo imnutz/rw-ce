@@ -3,6 +3,8 @@ var commonjs = require('@rollup/plugin-commonjs')
 var { nodeResolve } = require('@rollup/plugin-node-resolve')
 var tapSpec = require('tap-spec')
 
+process.env.CHROME_BIN = require('puppeteer').executablePath()
+
 module.exports = function (config) {
   config.set({
     files: [
@@ -25,13 +27,6 @@ module.exports = function (config) {
     frameworks: ['tap'],
     colors: true,
     singleRun: true,
-
-    customLaunchers: {
-      ChromeHeadless: {
-        base: 'Chrome',
-        flags: ['--headless']
-      }
-    },
 
     rollupPreprocessor: {
       external: ['tape'],
