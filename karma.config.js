@@ -21,7 +21,7 @@ module.exports = function (config) {
     },
 
     reporters: ['tap-pretty'],
-    browsers: ['FirefoxHeadless'],
+    browsers: ['ChromeHeadless'],
     frameworks: ['tap'],
     colors: true,
     singleRun: true,
