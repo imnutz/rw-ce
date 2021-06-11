@@ -1,8 +1,20 @@
 version: 2.1
+
+commands:
+  build-tape:
+    description: "Build tapejs"
+    steps:
+      - run: npm build-tape
+  test:
+    description: "Running tests"
+    steps:
+      - run: npm test
+
 workflows:
   test:
     jobs:
       - build-and-test
+
 jobs:
   build-and-test:
     docker: 
@@ -10,10 +22,6 @@ jobs:
     steps:
       - checkout
       - node/install-packags
-      - run:
-        name: Build tape
-        command: npm build-tape
-      - run:
-        name: Test
-        command: npm test
+      - build-tape
+      - test
 
