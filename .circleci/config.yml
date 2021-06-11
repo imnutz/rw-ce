@@ -7,11 +7,11 @@ commands:
   build-tape:
     description: "Build tapejs"
     steps:
-      - run: npm build-tape
+      - run: npm run build-tape
   test:
     description: "Running tests"
     steps:
-      - run: npm test
+      - run: npm run test
 
 workflows:
   test:
