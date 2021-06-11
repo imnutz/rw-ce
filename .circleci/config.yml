@@ -42,6 +42,11 @@ jobs:
       - checkout
       - node/install-packages:
           override-ci-command: npm install
+      - save_cache:
+            paths:
+              - ~/usr/local/lib/node_modules  # location depends on npm version
+            key: rwce-{{ .Branch }}-{{ checksum "package-lock.json" }}
+
       - build-tape
       - test
 
